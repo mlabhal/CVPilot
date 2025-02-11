@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "outDir": "./dist",
+      "rootDir": "./src",  // Changé
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "types": ["node"]
+  },
+  "include": [
+      "src/**/*",
+      "src/config/**/*"  // Modifié
+  ],
+  "exclude": [
+      "seeds",
+      "node_modules",
+      "dist"  // Ajouté
+  ]
+}

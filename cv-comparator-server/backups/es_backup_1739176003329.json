@@ -1,0 +1,362 @@
+[
+  {
+    "_index": "cvs",
+    "_id": "1739119120011-CV LABHAL Mehdi (8).pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739119120011-CV LABHAL Mehdi (8).pdf",
+      "skills": [
+        "Agile Scrum",
+        "Cycle-V",
+        "Gestion de projets",
+        "Rédaction des process et documents",
+        "Formation & conduite de changement",
+        "Spécifications fonctionnelles & techniques",
+        "Réalisation des Roadmaps",
+        "Sauvegarde et Supervision des solutions post MEP",
+        "Test & Qualité",
+        "Reporting & Estimation des charges",
+        "Recette & Assistance MEP",
+        "Gestion des risques",
+        "Indicateurs KPIs",
+        "Alignement stratégique",
+        "Planification & Suivi Projet",
+        "Gestion des délais et des coûts",
+        "Développement Logiciel SDLC",
+        "API REST",
+        "ELK"
+      ],
+      "tools": [
+        "Jira",
+        "Camunda",
+        "SAP",
+        "PCARD"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme ingénieur d'état en informatique",
+        "Certification SCRUM PO",
+        "Formation AMPLITUDE Core Banking"
+      ],
+      "languages": [],
+      "indexed_date": "2025-02-09T16:38:49.742Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739119120009-CV-Faiza-Chtita-23.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739119120009-CV-Faiza-Chtita-23.pdf",
+      "skills": [
+        "Business Analysis",
+        "Project Management",
+        "Data Analysis",
+        "ETL Development",
+        "Agile Methodologies",
+        "Change Management",
+        "User Training and Support"
+      ],
+      "tools": [
+        "Jira",
+        "Power BI",
+        "IBM Cognos Analytics",
+        "Qlik Sense",
+        "DataStage",
+        "Microstrategy",
+        "Tibco BW6",
+        "Jenkins",
+        "Excel",
+        "Sciforma"
+      ],
+      "experience_years": 5,
+      "education": [
+        "Diplôme d'Ingénieur d'Etat Institut National de Statistique et d’Economie Appliquée",
+        "IBM",
+        "",
+        "DATACAMP"
+      ],
+      "languages": [
+        "French",
+        "English"
+      ],
+      "indexed_date": "2025-02-09T16:38:44.394Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739118086502-Product Owner for Morocco market.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739118086502-Product Owner for Morocco market.pdf",
+      "skills": [
+        "Product Ownership",
+        "Business Analysis",
+        "Project Management",
+        "Agile Scrum Methodologies",
+        "Generative AI Solutions",
+        "Call Center Technologies",
+        "Payment Solutions",
+        "Order to Cash Process"
+      ],
+      "tools": [
+        "Salesforce",
+        "Zendesk",
+        "Microsoft Dynamics",
+        "Genesys",
+        "Avaya",
+        "Cisco Unified Communications",
+        "Amazon Connect",
+        "Power BI",
+        "Tableau",
+        "Excel"
+      ],
+      "experience_years": 17,
+      "education": [
+        "BBA - 2005",
+        "E-MBA"
+      ],
+      "languages": [
+        "English",
+        "Urdu",
+        "Arabic"
+      ],
+      "indexed_date": "2025-02-09T16:21:41.354Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739118086492-Mehdi Labhal - Accord de PrÃ©sentation de Candidature Freelance - SociÃ©tÃ© GÃ©nÃ©rale Maroc 005894.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739118086492-Mehdi Labhal - Accord de PrÃ©sentation de Candidature Freelance - SociÃ©tÃ© GÃ©nÃ©rale Maroc 005894.pdf",
+      "skills": [
+        "Business Analysis",
+        "IT Banking"
+      ],
+      "tools": [],
+      "experience_years": 0,
+      "education": [],
+      "languages": [
+        "French"
+      ],
+      "indexed_date": "2025-02-09T16:21:28.279Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739119603388-CV-Faiza-Chtita-23.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739119603388-CV-Faiza-Chtita-23.pdf",
+      "skills": [
+        "Business Analysis",
+        "Project Management",
+        "Data Analysis",
+        "ETL Development",
+        "Agile Methodologies",
+        "Change Management",
+        "Quality Audit"
+      ],
+      "tools": [
+        "Jira",
+        "Power BI",
+        "IBM Cognos Analytics",
+        "Qlik Sense",
+        "DataStage",
+        "Microstrategy",
+        "Tibco BW6",
+        "Jenkins",
+        "Oracle",
+        "Teradata",
+        "MySQL",
+        "SQL",
+        "SSIS",
+        "ODI",
+        "OBIEE",
+        "Excel",
+        "Sciforma"
+      ],
+      "experience_years": 5,
+      "education": [
+        "Diplômée Ingénieur d’Etat à L’Institut National de Statistique et d’Economie Appliquée (Filière Ingénierie de données et informatique décisionnelle – BI), 2018",
+        "Formation certifiante en BIGDATA par IBM, 2018",
+        "Certification Scrum Foundation Professional (SFPC), 2020",
+        "Formation Certifiante Power BI-DATACAMP, 2022"
+      ],
+      "languages": [
+        "French",
+        "English"
+      ],
+      "indexed_date": "2025-02-09T16:46:47.635Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739119603390-CV LABHAL Mehdi (8).pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739119603390-CV LABHAL Mehdi (8).pdf",
+      "skills": [
+        "Agile Scrum",
+        "Cycle-V",
+        "Gestion de projets",
+        "Gestion de portefeuilles",
+        "Alignement stratégique",
+        "Planification & Suivi Projet",
+        "Gestion des délais et des coûts",
+        "Développement Logiciel SDLC",
+        "API REST",
+        "ELK",
+        "Test & Qualité",
+        "Reporting & Estimation des charges",
+        "Recette & Assistance MEP",
+        "Gestion des risques",
+        "Indicateurs KPIs",
+        "Spécifications fonctionnelles & techniques",
+        "Formation & conduite de changement",
+        "Rédaction des process et documents"
+      ],
+      "tools": [
+        "Camunda",
+        "SAP",
+        "Jira"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme ingénieur d'état en informatique",
+        "Certification SCRUM PO",
+        "Formation AMPLITUDE Core Banking"
+      ],
+      "languages": [],
+      "indexed_date": "2025-02-09T16:46:52.916Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739119677154-CV-Faiza-Chtita-23.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739119677154-CV-Faiza-Chtita-23.pdf",
+      "skills": [
+        "Business Analysis",
+        "Project Management",
+        "Data Analysis",
+        "ETL Development",
+        "Agile Methodologies",
+        "Change Management",
+        "Quality Audit"
+      ],
+      "tools": [
+        "Jira",
+        "Power BI",
+        "IBM Cognos Analytics",
+        "Qlik Sense",
+        "DataStage",
+        "Microstrategy",
+        "Tibco BW6",
+        "Jenkins",
+        "Excel",
+        "Sciforma"
+      ],
+      "experience_years": 5,
+      "education": [
+        "Diplômée Ingénieur d’Etat à L’Institut National de Statistique et d’Economie Appliquée (2018)",
+        "Formation certifiante en BIGDATA par IBM (2018)",
+        "Certification Scrum Foundation Professional (SFPC) (2020)",
+        "Formation Certifiante Power BI-DATACAMP (2022)"
+      ],
+      "languages": [
+        "French",
+        "English"
+      ],
+      "indexed_date": "2025-02-09T16:48:00.540Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739119677155-CV LABHAL Mehdi (8).pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739119677155-CV LABHAL Mehdi (8).pdf",
+      "skills": [
+        "Agile Scrum",
+        "Cycle-V",
+        "Gestion de projets",
+        "Gestion de portefeuilles",
+        "Gestion de performances",
+        "Rédaction des process et documents",
+        "Formation & conduite de changement",
+        "Spécifications fonctionnelles & techniques",
+        "Réalisation des Roadmaps",
+        "Sauvegarde et Supervision des solutions post MEP",
+        "Test & Qualité",
+        "Reporting & Estimation des charges",
+        "Recette & Assistance MEP",
+        "Gestion des risques",
+        "Indicateurs KPIs",
+        "Alignement stratégique",
+        "Planification & Suivi Projet",
+        "Gestion des délais et des coûts",
+        "Développement Logiciel SDLC",
+        "API REST",
+        "ELK"
+      ],
+      "tools": [
+        "Jira",
+        "Camunda",
+        "SAP",
+        "PCARD"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme ingénieur d'état en informatique",
+        "Certification SCRUM PO",
+        "Formation AMPLITUDE Core Banking"
+      ],
+      "languages": [],
+      "indexed_date": "2025-02-09T16:48:05.212Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739119677164-Product Owner for Morocco market.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739119677164-Product Owner for Morocco market.pdf",
+      "skills": [
+        "Product Ownership",
+        "Agile Scrum methodologies",
+        "Generative AI solutions",
+        "Call Center Technologies",
+        "Payment Solutions",
+        "Order to Cash Process",
+        "Lean/Agile leadership"
+      ],
+      "tools": [
+        "Salesforce",
+        "Zendesk",
+        "Microsoft Dynamics",
+        "Genesys",
+        "Avaya",
+        "Cisco Unified Communications",
+        "Amazon Connect",
+        "Power BI",
+        "Tableau",
+        "Excel"
+      ],
+      "experience_years": 17,
+      "education": [
+        "BBA - 2005",
+        "E-MBA",
+        "Product Owner Business Analyst, Project Management"
+      ],
+      "languages": [
+        "English",
+        "Urdu",
+        "Arabic"
+      ],
+      "indexed_date": "2025-02-09T16:48:08.790Z"
+    }
+  }
+]

@@ -1,0 +1,145 @@
+[
+  {
+    "_index": "cvs",
+    "_id": "1739197238612-CV LABHAL Mehdi (8).pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739197238612-CV LABHAL Mehdi (8).pdf",
+      "skills": [
+        "Agile Scrum",
+        "Cycle-V",
+        "Gestion de projets",
+        "Rédaction des process et documents",
+        "Formation & conduite de changement",
+        "Spécifications fonctionnelles & techniques",
+        "Réalisation des Roadmaps",
+        "Sauvegarde et Supervision des solutions post MEP",
+        "Test & Qualité",
+        "Reporting & Estimation des charges",
+        "Recette & Assistance MEP",
+        "Gestion des risques",
+        "Indicateurs KPIs",
+        "Alignement stratégique",
+        "Planification & Suivi Projet",
+        "Gestion des délais et des coûts",
+        "Développement Logiciel SDLC",
+        "API REST",
+        "ELK"
+      ],
+      "tools": [
+        "Camunda",
+        "SAP",
+        "Jira"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme ingénieur d'état en informatique",
+        "Certification SCRUM PO",
+        "Formation AMPLITUDE Core Banking"
+      ],
+      "languages": [],
+      "indexed_date": "2025-02-10T14:21:27.480Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739197238628-Product Owner for Morocco market.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739197238628-Product Owner for Morocco market.pdf",
+      "skills": [
+        "Product Ownership",
+        "Agile Scrum Methodologies",
+        "Generative AI Solutions",
+        "Call Center Technologies",
+        "Payment Solutions",
+        "Order to Cash Process"
+      ],
+      "tools": [
+        "Salesforce",
+        "Zendesk",
+        "Microsoft Dynamics",
+        "Genesys",
+        "Avaya",
+        "Cisco Unified Communications",
+        "Amazon Connect",
+        "Power BI",
+        "Tableau",
+        "Excel"
+      ],
+      "experience_years": 16,
+      "education": [
+        "BBA - 2005",
+        "E-MBA",
+        "Product Owner Business Analyst, Project Management"
+      ],
+      "languages": [
+        "English",
+        "Urdu",
+        "Arabic"
+      ],
+      "indexed_date": "2025-02-10T14:21:37.585Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739197238607-CV-Faiza-Chtita-23.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739197238607-CV-Faiza-Chtita-23.pdf",
+      "skills": [
+        "Agile methodologies",
+        "Business analysis",
+        "Project management",
+        "Data analysis",
+        "ETL development",
+        "Dashboard creation",
+        "Change management"
+      ],
+      "tools": [
+        "Jira",
+        "Power BI",
+        "IBM Cognos Analytics",
+        "Qlik Sense",
+        "DataStage",
+        "Microstrategy",
+        "Tibco BW6",
+        "Jenkins",
+        "Oracle",
+        "Teradata",
+        "MySQL",
+        "SQL",
+        "Excel",
+        "Sciforma"
+      ],
+      "experience_years": 5,
+      "education": [
+        "Diplômée Ingénieur d’Etat Institut National de Statistique et d’Economie Appliquée",
+        "IBM",
+        "",
+        ""
+      ],
+      "languages": [],
+      "indexed_date": "2025-02-10T14:21:17.243Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1739118086492-Mehdi Labhal - Accord de PrÃ©sentation de Candidature Freelance - SociÃ©tÃ© GÃ©nÃ©rale Maroc 005894.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1739118086492-Mehdi Labhal - Accord de PrÃ©sentation de Candidature Freelance - SociÃ©tÃ© GÃ©nÃ©rale Maroc 005894.pdf",
+      "skills": [
+        "Business Analysis",
+        "IT Banking"
+      ],
+      "tools": [],
+      "experience_years": 0,
+      "education": [],
+      "languages": [
+        "French"
+      ],
+      "indexed_date": "2025-02-09T16:21:28.279Z"
+    }
+  }
+]
