@@ -6,193 +6,196 @@ const cleanFileName = (fileName) => {
     .replace(/\.(pdf|doc|docx)$/i, '');
 };
 
-// Fonction utilitaire pour formater le résultat d'analyse
-const formatAnalysisResult = (analysis, fileName) => {
-  if (!analysis) return null;
+// Fonction utilitaire pour formater le résultat d'extraction
+const formatExtractionResult = (extraction, fileName) => {
+  if (!extraction) return null;
   
   return {
-    candidate_id: fileName,
+    fileName: fileName,
     name: cleanFileName(fileName),
     status: 'completed',
-    // Champs optionnels avec valeurs par défaut
-    skills: analysis.skills || [],
-    tools: analysis.tools || [],
-    experience_years: analysis.experience_years || 0,
-    education: analysis.education || [],
-    languages: analysis.languages || [],
-    experiences: analysis.experiences || [],
-    // Scores avec valeurs par défaut
-    similarity_score: analysis.analysis?.similarity_score || 0,
-    similarity_to_job: analysis.analysis?.similarity_to_job || 0,
-    description_match: {
-      score: analysis.analysis?.similarity_to_job || 0,
-      relevant_experiences: analysis.analysis?.strengths || [],
-      keyword_matches: analysis.analysis?.matching_skills || []
-    },
-    skill_match_percent: analysis.analysis?.skill_match_percent || 0,
-    matching_skills: analysis.analysis?.matching_skills || [],
-    matching_tools: analysis.analysis?.matching_tools || [],
-    experience_match: analysis.analysis?.detailed_scores?.experience || 0,
-    education_match: analysis.analysis?.detailed_scores?.education || 0,
-    language_match: analysis.analysis?.detailed_scores?.languages || 0,
-    detailed_scores: analysis.analysis?.detailed_scores || {
-      skills: 0,
-      tools: 0,
-      experience: 0,
-      education: 0,
-      languages: 0
-    }
-  };
-};
-
-// Fonction utilitaire pour générer l'analyse AI
-const generateAIAnalysis = (results, requirements) => {
-  if (!results || results.length === 0) {
-    return {
-      summary: {
-        top_candidate: "Aucun candidat trouvé",
-        comparative_analysis: "Aucun CV analysé",
-        description_analysis: "Analyse impossible",
-        hiring_recommendations: []
-      }
-    };
-  }
-
-  const topCandidate = results[0];
-  const runnerUp = results[1];
-  
-  return {
-    summary: {
-      top_candidate: topCandidate.name,
-      comparative_analysis: `${results.length} CVs analysés. ${
-        topCandidate.similarity_score 
-          ? `Meilleur score: ${(topCandidate.similarity_score * 100).toFixed(1)}%` 
-          : ''
-      }`,
-      description_analysis: requirements?.description 
-        ? `Analyse basée sur une description de poste de ${requirements.description.length} caractères`
-        : "Aucune description de poste fournie",
-      hiring_recommendations: [
-        topCandidate.matching_skills?.length 
-          ? `Le candidat ${topCandidate.name} se démarque avec ${topCandidate.matching_skills.length} compétences correspondantes`
-          : null,
-        ...(topCandidate.description_match?.relevant_experiences || []),
-        runnerUp && topCandidate.similarity_score && runnerUp.similarity_score
-          ? `Suivi par ${runnerUp.name} avec une différence de ${
-              ((topCandidate.similarity_score - runnerUp.similarity_score) * 100).toFixed(1)
-            }%`
-          : null
-      ].filter(Boolean)
-    }
+    summary:extraction.summary || "",
+    skills: extraction.skills || [],
+    tools: extraction.tools || [],
+    experience_years: extraction.experience_years || 0,
+    education: extraction.education || [],
+    languages: extraction.languages || [],
+    experiences: extraction.experiences || [],
+    matching_skills: extraction.matching_skills || [],
+    matching_tools: extraction.matching_tools || [],
+    projects: extraction.projects|| []
   };
 };
 
 class CVController {
+
   async compareCV(req, res) {
     try {
       console.log('Début de la comparaison des CVs');
       
-      const requirements = req.body.requirements ? JSON.parse(req.body.requirements) : {};
+      // Récupération et normalisation des requirements
+      let requirements = req.body.requirements ? JSON.parse(req.body.requirements) : {};
+      
+      // Normalisation des champs après la récupération
+      if (requirements && typeof requirements === 'object') {
+        requirements = {
+          description: requirements.description || '',
+          // Diviser la chaîne en tableau et nettoyer chaque élément
+          skills: Array.isArray(requirements.skills) 
+            ? requirements.skills 
+            : requirements.skills?.split(',').map(s => s.trim()) || [],
+          // Diviser la chaîne en tableau et nettoyer chaque élément
+          tools: Array.isArray(requirements.tools)
+            ? requirements.tools
+            : requirements.tools?.split(',').map(t => t.trim()) || [],
+          experience_years: Number(requirements.experience_years) || 0,
+          education: Array.isArray(requirements.education) ? requirements.education : [],
+          languages: Array.isArray(requirements.languages) ? requirements.languages : []
+        };
+      }
+  
+      console.log('Requirements normalisés:', requirements);
+
       const files = req.files;
       const errors = [];
-      
-      if (!files || files.length < 2) {
-        return res.status(400).json({ 
-          error: 'Au moins deux fichiers sont requis',
-          message: 'Veuillez sélectionner au moins deux CVs à comparer'
-        });
-      }
-
-      console.log(`Traitement de ${files.length} fichiers`);
-      
-      const analysisPromises = files.map(async (file) => {
-        try {
-          console.log(`Début du traitement de ${file.originalname}`);
-          
-          const filePath = file.path;
-          const text = await cvService.extractText(filePath);
-          const analysis = await cvService.analyzeWithGPT(text, requirements.description || '');
-          
-          // Nettoyage asynchrone du fichier
-          cvService.cleanupFile(filePath).catch(err => 
-            console.error(`Erreur lors du nettoyage de ${filePath}:`, err)
-          );
-
-          return formatAnalysisResult(analysis, file.originalname);
-        } catch (error) {
-          console.error(`Erreur détaillée pour ${file.originalname}:`, error);
-          errors.push({
-            file: file.originalname,
-            error: error.message
+        
+        if (!files || files.length < 2) {
+          return res.status(400).json({ 
+            error: 'Au moins deux fichiers sont requis',
+            message: 'Veuillez sélectionner au moins deux CVs à comparer'
           });
-          // On retourne un résultat partiel si possible
-          return error.partialResult 
-            ? formatAnalysisResult(error.partialResult, file.originalname)
-            : null;
         }
-      });
-
-      const analysisResults = await Promise.all(analysisPromises);
-      const results = analysisResults.filter(result => result !== null);
   
-      if (results.length === 0) {
-        return res.status(404).json({ 
-          error: 'Aucun CV n\'a pu être analysé',
-          message: 'Veuillez vérifier le format des fichiers',
-          details: errors
+        console.log(`Traitement de ${files.length} fichiers`);
+        
+        const analysisPromises = files.map(async (file) => {
+          try {
+            console.log(`Début du traitement de ${file.originalname}`);
+            
+            const filePath = file.path;
+            const text = await cvService.extractText(filePath);
+            
+            // Utiliser directement analyzeWithGPT avec les requirements
+            const extraction = await cvService.analyzeWithGPT(text, requirements, file.originalname);
+            const candidateData = formatExtractionResult(extraction, file.originalname);
+            
+            // Calculer les scores en utilisant la fonction du service
+            if (candidateData) {
+              const scores = cvService.calculateManualScore(candidateData, requirements);
+              Object.assign(candidateData, {
+                similarity_score: scores.totalScore,
+                skill_match_percent: scores.skillMatchPercent,
+                description_match_score: scores.description_match_score,
+                matching_skills: scores.matchingSkills,
+                matching_tools: scores.matchingTools
+              });
+              // Ajout des logs détaillés ici
+              console.log(`[COMPARE] Résultats détaillés pour ${file.originalname}:`, {
+                similarity_score: scores.totalScore,
+                skills_requis: requirements.skills?.length || 0,
+                skills_trouvés: scores.matchingSkills.length,
+                skills_correspondants: scores.matchingSkills,
+                tools_requis: requirements.tools?.length || 0,
+                tools_trouvés: scores.matchingTools.length,
+                tools_correspondants: scores.matchingTools,
+                skill_match_percent: scores.skillMatchPercent,
+                description_match_score: scores.description_match_score
+                });
+            }
+            
+            // Nettoyage asynchrone du fichier
+            cvService.cleanupFile(filePath).catch(err => 
+              console.error(`Erreur lors du nettoyage de ${filePath}:`, err)
+            );
+  
+            return candidateData;
+            
+          } catch (error) {
+            console.error(`Erreur détaillée pour ${file.originalname}:`, error);
+            errors.push({
+              file: file.originalname,
+              error: error.message
+            });
+            return null;
+          }
+        });
+  
+        const analysisResults = await Promise.all(analysisPromises);
+        const results = analysisResults.filter(result => result !== null);
+    
+        if (results.length === 0) {
+          return res.status(404).json({ 
+            error: 'Aucun CV n\'a pu être analysé',
+            message: 'Veuillez vérifier le format des fichiers',
+            details: errors
+          });
+        }
+  
+        // Tri des résultats par score
+        results.sort((a, b) => (b.similarity_score || 0) - (a.similarity_score || 0));
+        
+        const response = {
+          rankings: results,
+          errors: errors.length > 0 ? errors : undefined
+        };
+    
+        console.log('Comparaison terminée avec succès');
+        res.json(response);
+        
+      } catch (error) {
+        console.error('Erreur critique lors de la comparaison:', error);
+        res.status(500).json({ 
+          error: 'Erreur lors de la comparaison des CVs',
+          details: error.message
         });
       }
-
-      // Tri des résultats avec gestion des valeurs manquantes
-      results.sort((a, b) => (b.similarity_score || 0) - (a.similarity_score || 0));
-      
-      const response = {
-        rankings: results,
-        errors: errors.length > 0 ? errors : undefined,
-        ai_analysis: generateAIAnalysis(results, requirements)
-      };
-  
-      console.log('Comparaison terminée avec succès');
-      res.json(response);
-      
-    } catch (error) {
-      console.error('Erreur critique lors de la comparaison:', error);
-      res.status(500).json({ 
-        error: 'Erreur lors de la comparaison des CVs',
-        details: error.message
-      });
     }
-  }
-
+  
   async searchCV(req, res) {
-    try {
-      console.log('Début de la recherche avec les critères:', req.body.requirements);
-      const requirements = req.body.requirements || {};
+      try {
+        // Récupération et normalisation des requirements
+        let requirements = req.body.requirements;
+        
+        // Normalisation des champs
+        if (requirements && typeof requirements === 'object') {
+          requirements = {
+            description: requirements.description || '',
+            skills: Array.isArray(requirements.skills) ? requirements.skills : [],
+            tools: Array.isArray(requirements.tools) ? requirements.tools : [],
+            experience_years: Number(requirements.experience_years) || 0,
+            education: Array.isArray(requirements.education) ? requirements.education : [],
+            languages: Array.isArray(requirements.languages) ? requirements.languages : []
+          };
+        }
+        
+        console.log('Requirements reçus:', requirements);
   
-      const results = await cvService.searchCVs(requirements);
-      
-      // On accepte les résultats même s'ils sont vides
-      const formattedResults = (results || [])
-        .map(result => formatAnalysisResult(result, result.fileName))
-        .filter(result => result !== null);
+        const { rankings } = await cvService.searchCVs(requirements);
+          
+          console.log(`Nombre de résultats trouvés: ${rankings?.length || 0}`);
+          
+          // Log des scores pertinents
+          const scores = rankings.map(r => ({
+              name: r.fileName,
+              similarity_score: r.similarity_score,
+              skill_match_percent: r.skill_match_percent,
+              description_match_score: r.description_match_score,
+              elasticsearch_score: r.elasticsearch_score
+          }));
+          console.log('Scores des résultats:', scores);
   
-      const response = {
-        rankings: formattedResults,
-        ai_analysis: generateAIAnalysis(formattedResults, requirements)
-      };
-  
-      console.log('Recherche terminée avec succès');
-      res.json(response);
-      
-    } catch (error) {
-      console.error('Erreur détaillée lors de la recherche:', error);
-      res.status(500).json({ 
-        error: 'Erreur lors de la recherche des CVs',
-        details: error.message
-      });
+          res.json({ rankings });
+          
+          console.log('Recherche terminée avec succès');
+          
+      } catch (error) {
+          console.error('Erreur détaillée lors de la recherche:', error);
+          res.status(500).json({ 
+              error: 'Erreur lors de la recherche des CVs',
+              details: error.message
+          });
+      }
     }
-  }
-
   async getStatus(req, res) {
     const { jobId } = req.params;
     try {
@@ -223,4 +226,5 @@ class CVController {
     }
   }
 }
+
 module.exports = new CVController();

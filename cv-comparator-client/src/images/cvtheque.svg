@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E293B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0F172A;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Filtres -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+    </filter>
+    
+    <!-- Motif grille -->
+    <pattern id="gridPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#6366F1" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+  </defs>
+
+  <!-- Fond avec grille -->
+  <rect width="800" height="600" fill="url(#bgGrad)"/>
+  <rect width="800" height="600" fill="url(#gridPattern)"/>
+
+  <!-- Cercles d'innovation -->
+  <g transform="translate(400, 300)">
+    <!-- Cercles rotatifs -->
+    <circle cx="0" cy="0" r="180" stroke="#6366F1" stroke-width="1" fill="none" opacity="0.1"/>
+    <circle cx="0" cy="0" r="160" stroke="#6366F1" stroke-width="1" fill="none" opacity="0.2"/>
+    <circle cx="0" cy="0" r="140" stroke="#6366F1" stroke-width="1" fill="none" opacity="0.3"/>
+    
+    <!-- Points de connexion lumineux -->
+    <g filter="url(#glow)">
+      <circle cx="160" cy="0" r="4" fill="#6366F1"/>
+      <circle cx="-160" cy="0" r="4" fill="#6366F1"/>
+      <circle cx="0" cy="160" r="4" fill="#6366F1"/>
+      <circle cx="0" cy="-160" r="4" fill="#6366F1"/>
+    </g>
+    
+    <!-- Lignes de connexion -->
+    <path d="M-180,0 L180,0" stroke="#6366F1" stroke-width="1" opacity="0.2"/>
+    <path d="M0,-180 L0,180" stroke="#6366F1" stroke-width="1" opacity="0.2"/>
+  </g>
+
+  <!-- Logo CV Pilot au centre -->
+  <g transform="translate(320, 220) scale(0.8)">
+    <!-- Hexagone de fond avec effet lumineux -->
+    <path d="M100 20 L170 60 L170 140 L100 180 L30 140 L30 60 Z" 
+          fill="url(#logoGrad)" 
+          stroke="#8B5CF6"
+          stroke-width="2"
+          filter="url(#glow)"/>
+    
+    <!-- Icône de document -->
+    <path d="M70 50 L120 50 L140 70 L140 150 L70 150 Z" 
+          fill="white" 
+          stroke="none"/>
+    <path d="M120 50 L120 70 L140 70" 
+          fill="#E2E8F0" 
+          stroke="none"/>
+    
+    <!-- Texte du logo -->
+    <text x="85" y="85" 
+          font-family="Arial, sans-serif" 
+          font-weight="bold" 
+          font-size="20" 
+          fill="#6366F1">CV</text>
+    <text x="85" y="105" 
+          font-family="Arial, sans-serif" 
+          font-weight="bold" 
+          font-size="20" 
+          fill="#6366F1">Pilot</text>
+    
+    <!-- Symbole IA -->
+    <circle cx="110" cy="125" r="12" fill="none" stroke="#6366F1" stroke-width="2"/>
+    <path d="M100 125 L120 125 M110 115 L110 135" 
+          stroke="#6366F1" 
+          stroke-width="2" 
+          stroke-linecap="round"/>
+  </g>
+
+  <!-- Texte d'innovation -->
+  <g transform="translate(400, 450)">
+    <text x="0" y="0" 
+          font-family="Arial, sans-serif" 
+          font-weight="bold" 
+          font-size="24" 
+          fill="white" 
+          text-anchor="middle">
+      Révolutionnez vos Ressources Humaines
+    </text>
+    <text x="0" y="30" 
+          font-family="Arial, sans-serif" 
+          font-size="16" 
+          fill="#94A3B8" 
+          text-anchor="middle">
+      Intelligence Artificielle • Analyse Avancée • Recrutement Intelligent
+    </text>
+  </g>
+
+  <!-- Éléments décoratifs -->
+  <g transform="translate(0, 0)" opacity="0.5">
+    <!-- Points de données -->
+    <circle cx="150" cy="150" r="2" fill="#6366F1"/>
+    <circle cx="650" cy="150" r="2" fill="#6366F1"/>
+    <circle cx="400" cy="100" r="2" fill="#6366F1"/>
+    <circle cx="200" cy="450" r="2" fill="#6366F1"/>
+    <circle cx="600" cy="450" r="2" fill="#6366F1"/>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-// Types existants
+// Types pour les utilisateurs
 export interface User {
   _id: string;
   name: string;
@@ -6,6 +6,7 @@ export interface User {
   avatar?: string;
 }
 
+// Types pour les canaux
 export interface Channel {
   _id: string;
   name: string;
@@ -15,6 +16,7 @@ export interface Channel {
   subscribers: User[];
 }
 
+// Types pour les publications
 export interface Post {
   _id: string;
   title: string;
@@ -39,7 +41,7 @@ export interface Post {
   updatedAt?: Date;
 }
 
-// Types pour l'analyse des CV
+// Types détaillés pour l'analyse des scores
 export interface DetailedScores {
   skills: number;
   tools: number;
@@ -49,31 +51,56 @@ export interface DetailedScores {
   description_relevance?: number;
 }
 
+// Type pour les correspondances de description
 export interface DescriptionMatch {
   score: number;
   relevant_experiences: string[];
   keyword_matches: string[];
 }
 
+
+export interface Experience {
+  title: string;
+  company: string;
+  description: string;
+  duration: string;
+  duration_in_months: number;
+}
+export interface Projects {
+  name: string;
+  description: string;
+  technologies: string[];
+}
 export interface Candidate {
   candidate_id: string;
+  fileName :string;
   name: string;
+  summary?:string;
   status: string;
-  similarity_score: number;
-  similarity_to_job: number;
-  description_match?: DescriptionMatch;
-  skill_match_percent: number;
+  skills: string[];
+  tools: string[];
+  experience_years: number;
+  education: string[];
+  languages: string[];
+  experiences: Experience[];
+  projects?:Projects[];
   matching_skills: string[];
   matching_tools: string[];
-  experience_years:number;
-  education:string[];
-  languages:string[];
-  experience_match: number;
-  education_match: number;
-  language_match: number;
-  detailed_scores: DetailedScores;
+  similarity_score: number;
+  skill_match_percent: number;
+  description_match_score: number;
 }
 
+export interface ApiResponse {
+  rankings: Candidate[];
+}
+
+export interface CVResultsPageProps {
+  apiResponse: ApiResponse;
+}
+
+
+// Interface pour le résumé de l'analyse IA
 export interface AIAnalysisSummary {
   top_candidate: string;
   comparative_analysis: string;
@@ -81,6 +108,7 @@ export interface AIAnalysisSummary {
   hiring_recommendations: string[];
 }
 
+// Interface pour les résultats de comparaison
 export interface ComparisonResults {
   rankings: Candidate[];
   ai_analysis: {
@@ -89,6 +117,7 @@ export interface ComparisonResults {
   errors?: APIError[];
 }
 
+// Interface pour les erreurs d'API
 export interface APIError {
   file?: string;
   error: string;
@@ -96,13 +125,25 @@ export interface APIError {
   stack?: string;
 }
 
-// Pour les props du composant CVResultsPage
+// Props pour le composant CVResultsPage
 export interface CVResultsPageProps {
-  apiResponse: ComparisonResults;
+  rankings?: Candidate[];
 }
-
 // Props pour le composant CVAnalysisViewer
 export interface CVAnalysisViewerProps {
-  analysisResult: Candidate;
+  analysisResult: Candidate & {
+    score?: {
+      totalScore: number;
+      detailedScores: {
+        skills: number;
+        tools: number;
+        experience: number;
+        education: number;
+        languages: number;
+        description_relevance?: number;
+      };
+    };
+    isTopCandidate?: boolean;
+  };
   globalSummary: AIAnalysisSummary;
 }

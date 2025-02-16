@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState, KeyboardEvent, ClipboardEvent } from 'react';
 
 interface MultiInputProps {
   id: string;
@@ -9,13 +9,13 @@ interface MultiInputProps {
   required?: boolean;
 }
 
-const MultiInput: React.FC<MultiInputProps> = ({ 
-  id, 
-  label, 
+const MultiInput: React.FC<MultiInputProps> = ({
+  id,
+  label,
   value = [], // Valeur par défaut
-  onChange, 
-  placeholder, 
-  required 
+  onChange,
+  placeholder,
+  required
 }) => {
   const [inputValue, setInputValue] = useState('');
   const items = Array.isArray(value) ? value : []; // Assure que items est toujours un tableau
@@ -30,12 +30,22 @@ const MultiInput: React.FC<MultiInputProps> = ({
     }
   };
 
-  const addItem = () => {
-    const trimmedValue = inputValue.trim();
-    if (trimmedValue && !items.includes(trimmedValue)) {
-      onChange([...items, trimmedValue]);
+  const addItem = (valueToAdd: string = inputValue) => {
+    const newItems = valueToAdd
+      .split(',')
+      .map(item => item.trim())
+      .filter(item => item !== '' && !items.includes(item));
+
+    if (newItems.length > 0) {
+      onChange([...items, ...newItems]);
       setInputValue('');
     }
+  };
+
+  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData('text');
+    addItem(pastedText);
   };
 
   const removeItem = (indexToRemove: number) => {
@@ -72,6 +82,7 @@ const MultiInput: React.FC<MultiInputProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
             onBlur={() => {
               if (inputValue.trim()) {
                 addItem();

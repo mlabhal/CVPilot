@@ -24,7 +24,16 @@ async function setupElasticsearch() {
               experience_years: { type: 'integer' },
               education: { type: 'keyword' },
               languages: { type: 'keyword' },
-              indexed_date: { type: 'date' }  // Ajout du champ date
+              experiences: {  // Nouveau champ experiences
+                type: 'nested',
+                properties: {
+                  title: { type: 'text' },
+                  company: { type: 'text' },
+                  description: { type: 'text' },
+                  duration: { type: 'text' }
+                }
+              },
+              indexed_date: { type: 'date' }
             }
           }
         }
@@ -33,10 +42,28 @@ async function setupElasticsearch() {
       return response;
     }
 
-    // Si l'index existe, vérifier le nombre de documents
+    // Si l'index existe, on met à jour le mapping pour ajouter les experiences
+    const updateMapping = await client.indices.putMapping({
+      index: 'cvs',
+      body: {
+        properties: {
+          experiences: {
+            type: 'nested',
+            properties: {
+              title: { type: 'text' },
+              company: { type: 'text' },
+              description: { type: 'text' },
+              duration: { type: 'text' }
+            }
+          }
+        }
+      }
+    });
+    console.log('Mapping mis à jour avec succès:', updateMapping);
+
     const count = await client.count({ index: 'cvs' });
     console.log('Documents existants dans l\'index:', count.count);
-    return { message: 'Index existant conservé', documentsCount: count.count };
+    return { message: 'Index mis à jour et conservé', documentsCount: count.count };
 
   } catch (error) {
     console.error('Erreur lors de la configuration d\'Elasticsearch:', error);

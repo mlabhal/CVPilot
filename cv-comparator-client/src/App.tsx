@@ -8,8 +8,9 @@ import RegisterForm from './components/auth/RegisterForm';
 import { Upload, Search, LogIn, UserPlus, LogOut, FileText  } from 'lucide-react';
 
 const MAUVE_COLOR = "#6366F1";  // Couleur indigo du logo
-const MAUVE_HOVER = "#8B5CF6";  // Couleur violette du logo pour l'effet hover
-
+const MAUVE_HOVER = "#E8EAF6";  // Couleur violette du logo pour l'effet hover
+const GRAY_COLOR = "#edf3ed";
+const WHITE_COLOR = '#FFFFFF';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem('token');
@@ -66,7 +67,7 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen bg-indigo-50">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: MAUVE_COLOR }}></div>
       </div>
     );
@@ -74,30 +75,36 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen relative">
+      <div className="min-h-screen bg-white relative">
 
         {/* Content */}
         <div className="relative z-10">
           {/* Navigation - masquée sur les pages d'auth */}
           <AuthAwareComponent>
           {(pathname) => !isAuthPage(pathname) && (
-          <nav style={{ backgroundColor: MAUVE_COLOR }} className="shadow-md">
+          <nav style={{ backgroundColor: WHITE_COLOR }} className="shadow-md">
             <div className="container mx-auto px-4 py-4">
               <div className="flex justify-between items-center">
+                {/* Logo */}
+                <div className="flex items-center">
+                  <Link to="/" className="flex items-center">
+                    <img 
+                      src="/../../public/logo.svg" 
+                      alt="Logo" 
+                      className="h-20 w-20 mr-4"
+                    />
+                  </Link>
+                </div>
                 <div className="flex space-x-6">
                   {isAuthenticated && (
                     <>
-                      <Link to="/" className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors">
+                      <Link to="/" className="flex items-center gap-2 text-indigo-500 bg-indigo-50 hover:bg-gray-200 hover:text-indigo-500 transition-colors px-3 py-2 rounded-md">
                         <Upload className="h-5 w-5" />
                         CV Upload
                       </Link>
-                      <Link to="/search" className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors">
+                      <Link to="/search" className="flex items-center gap-2 text-indigo-500 bg-indigo-50 hover:bg-gray-200 hover:text-indigo-500 transition-colors px-3 py-2 rounded-md">
                         <Search className="h-5 w-5" />
                         CV Search
-                      </Link>
-                      <Link to="/results" className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors">
-                            <FileText className="h-5 w-5" />
-                            Résultats
                       </Link>
                     </>
                   )}
@@ -107,14 +114,14 @@ function App() {
                   {isAuthenticated ? (
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors"
+                      className="flex items-center gap-2 text-indigo-500 bg-indigo-50 hover:bg-gray-200 hover:text-indigo-500 transition-colors px-3 py-2 rounded-md"
                     >
                       <LogOut className="h-5 w-5" />
                       Déconnexion
                     </button>
                   ) : (
                     <>
-                      <Link to="/login" className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors">
+                      <Link to="/login" className="flex items-center gap-2 text-white hover:bg-gray-200 hover:text-indigo-500 transition-colors">
                         <LogIn className="h-5 w-5" />
                         Connexion
                       </Link>
