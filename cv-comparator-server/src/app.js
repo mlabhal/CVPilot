@@ -72,7 +72,7 @@ app.use((err, req, res, next) => {
 async function initializeServer() {
   try {
     // 1. Connexion MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/my_database');
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://appUser:CVPilot_123@10.106.0.2:27017/CVPilotDatabase');
     console.log('Connected to MongoDB');
 
     // 2. Elasticsearch et dossiers
