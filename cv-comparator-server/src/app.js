@@ -72,10 +72,8 @@ app.use((err, req, res, next) => {
 async function initializeServer() {
   try {
     // 1. Connexion MongoDB
-    await mongoose.connect('mongodb://appUser:CVPilot_123@10.106.0.2:27017/CVPilotDatabase?authSource=admin', {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-          serverSelectionTimeoutMS: 5000
+    await mongoose.connect('mongodb+srv://doadmin:90P3dW54VMn27HX8@private-db-mongodb-lon1-44757-9256b348.mongo.ondigitalocean.com/CVPilotDatabase?authSource=admin', {
+          retryWrites: true
       });
     console.log('Connected to MongoDB');
 
