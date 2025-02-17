@@ -1,0 +1,1 @@
+web: cd cv-comparator-server && npm start

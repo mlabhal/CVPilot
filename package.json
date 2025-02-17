@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd cv-comparator-client && npm run dev\" \"cd cv-comparator-server && npm start\"",
-    "install-all": "concurrently \"cd cv-comparator-client && npm install\" \"cd cv-comparator-server && npm install\""
+    "start": "cd cv-comparator-server && npm start",
+    "client": "cd cv-comparator-client && npm run dev",
+    "server": "cd cv-comparator-server && npm start",
+    "build-client": "cd cv-comparator-client && npm run build",
+    "build-server": "cd cv-comparator-server && npm run build"
   },
   "keywords": [],
   "author": "",

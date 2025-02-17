@@ -7,13 +7,18 @@ const { findFreePort } = require('./utils/port.utils');
 const { ensureUploadDirectory } = require('./utils/file.utils');
 const SyncService = require('./services/sync.service');
 const { removeDuplicateFiles, initAllCronJobs } = require('./utils/cron.utils');
+const fs = require('fs').promises;
+const path = require('path');
 
 const app = express();
 
 
 // CORS configuration
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+  'http://localhost:5173',
+  process.env.FRONTEND_URL|| 'http://localhost:5173'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -86,13 +91,13 @@ async function initializeServer() {
     await testConnection();
 
     // 6. Configuration du port
-    const PORT = await findFreePort(3000);
+    const PORT = process.env.PORT || await findFreePort(3000);
     
     // 7. Configuration des tâches planifiées
     initAllCronJobs();
 
     // 8. Démarrage du serveur
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log('=================================');
       console.log(`Server running on port ${PORT}`);
       console.log(`Frontend URL: http://localhost:5173`);
