@@ -72,7 +72,7 @@ app.use((err, req, res, next) => {
 async function initializeServer() {
   try {
     // 1. Connexion MongoDB
-    await mongoose.connect('mongodb+srv://doadmin:90P3dW54VMn27HX8@private-db-mongodb-lon1-44757-9256b348.mongo.ondigitalocean.com/CVPilotDatabase?authSource=admin', {
+    await mongoose.connect('mongodb+srv://doadmin:90P3dW54VMn27HX8@db-mongodb-lon1-44757-aa601f7a.mongo.ondigitalocean.com/CVPilotDatabase?authSource=admin', {
           retryWrites: true
       });
     console.log('Connected to MongoDB');
