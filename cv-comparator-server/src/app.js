@@ -72,7 +72,11 @@ app.use((err, req, res, next) => {
 async function initializeServer() {
   try {
     // 1. Connexion MongoDB
-    await mongoose.connect('mongodb://appUser:CVPilot_123@10.106.0.2:27017/CVPilotDatabase');
+    await mongoose.connect('mongodb://appUser:CVPilot_123@10.106.0.2:27017/CVPilotDatabase?authSource=admin', {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          serverSelectionTimeoutMS: 5000
+      });
     console.log('Connected to MongoDB');
 
     // 2. Elasticsearch et dossiers
