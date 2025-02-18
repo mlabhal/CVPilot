@@ -6,6 +6,13 @@ class SyncService {
   static config = {
     elasticsearch: {
       node: process.env.ELASTICSEARCH_URL || 'https://165.22.113.118:9200',
+      auth: {
+        username: 'elastic',
+        password: process.env.ELASTIC_PASSWORD
+      },
+      tls: {
+        rejectUnauthorized: false
+      },
       index: 'cvs',
       batchSize: 1000
     },
