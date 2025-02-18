@@ -46,7 +46,7 @@ app.use('/api/personalized-quiz', quizRoutes);
 if (process.env.NODE_ENV === 'production') {
   // Supposons que votre build React se trouve dans '../client/build'
   // Ajustez le chemin selon votre structure de projet
-  const clientBuildPath = path.join(__dirname, '../cv-comparator-client/dist');
+  const clientBuildPath = path.join(__dirname, '../../cv-comparator-client/dist');
   app.use(express.static(clientBuildPath));
   
   // Toutes les requêtes non API sont redirigées vers l'app React
