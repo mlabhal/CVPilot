@@ -1,7 +1,14 @@
 const { Client } = require('@elastic/elasticsearch');
 
 const client = new Client({
-  node: 'http://165.22.113.118:9200'
+  node: 'https://165.22.113.118:9200',
+  auth: {
+    username: 'elastic',
+    password: 'EnxO-zdnSylpMewbIgdo'
+  },
+  tls: {
+    rejectUnauthorized: false // À utiliser uniquement en développement
+  }
 });
 
 async function setupElasticsearch() {
