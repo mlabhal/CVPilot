@@ -5,11 +5,9 @@ import CVSearch from './components/CVSearch';
 import CVResultsPage from './components/CVResultsPage';  // Nouveau import
 import LoginForm from './components/auth/LoginForm';
 import RegisterForm from './components/auth/RegisterForm';
-import { Upload, Search, LogIn, UserPlus, LogOut, FileText  } from 'lucide-react';
+import { Upload, Search, LogIn, UserPlus, LogOut} from 'lucide-react';
 
 const MAUVE_COLOR = "#6366F1";  // Couleur indigo du logo
-const MAUVE_HOVER = "#E8EAF6";  // Couleur violette du logo pour l'effet hover
-const GRAY_COLOR = "#edf3ed";
 const WHITE_COLOR = '#FFFFFF';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {

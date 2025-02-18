@@ -28,15 +28,6 @@ function CVUpload() {
     description: '' // Initialisation du nouveau champ
   });
 
-  // ... [Tous vos handlers restent les mêmes]
-  const handleArrayInput = (field: keyof JobRequirements, value: string) => {
-    const items = value.split(',').map(item => item.trim()).filter(item => item !== '');
-    setRequirements(prev => ({
-      ...prev,
-      [field]: items
-    }));
-  };
-
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files);
@@ -113,18 +104,6 @@ function CVUpload() {
     }
   };
 
-  const resetForm = () => {
-    setSelectedFiles([]);
-    setRequirements({
-      skills: [],
-      tools: [],
-      experience_years: 0,
-      education: [],
-      languages: [],
-      description: '' // Réinitialisation du nouveau champ
-    });
-    setError(null);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">

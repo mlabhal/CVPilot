@@ -161,7 +161,7 @@ const Blog: React.FC<BlogProps> = ({ user }) => {
           channelSlug={activeChannel.slug}  // Ajout du slug
           user={user}  // Ajout de user
           onClose={() => setIsNewPostModalOpen(false)}
-          onSubmit={async (postData) => {
+          onSubmit={async (_postData) => {
             
             await fetchChannelPosts(activeChannel.slug);
             // Logique de création de post

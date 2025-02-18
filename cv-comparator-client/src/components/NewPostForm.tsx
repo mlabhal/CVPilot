@@ -63,7 +63,6 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ channelId, channelSlug, user,
         const errorData = await response.json();
         throw new Error(errorData.error || 'Erreur lors de la création du post');
       }
-      const data = await response.json();
       onSubmit({
         title,
         content,
