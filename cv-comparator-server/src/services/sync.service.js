@@ -5,7 +5,7 @@ const path = require('path');
 class SyncService {
   static config = {
     elasticsearch: {
-      node: process.env.ELASTICSEARCH_URL || process.env.ELASTICSEARCH_NODE_LOCAL,
+      node: process.env.ELASTICSEARCH_NODE_DIGITALOCEAN || process.env.ELASTICSEARCH_NODE_LOCAL,
       auth: {
         username: 'elastic',
         password: process.env.ELASTIC_PASSWORD
