@@ -34,11 +34,31 @@ const channelRoutes = require('./routes/channel.routes');
 const postRoutes = require('./routes/post.routes');
 const userRoutes = require('./routes/user.routes');
 const cvRoutes = require('./routes/cv.routes');
+const quizRoutes = require('./routes/personalizedQuizRoutes');
 
 app.use('/api/channels', channelRoutes);
 app.use('/api/channels', postRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cv', cvRoutes);
+app.use('/api/personalized-quiz', quizRoutes);
+
+// Servir les fichiers statiques de React en production
+if (process.env.NODE_ENV === 'production') {
+  // Supposons que votre build React se trouve dans '../client/build'
+  // Ajustez le chemin selon votre structure de projet
+  const clientBuildPath = path.join(__dirname, '../cv-comparator-client/dist');
+  app.use(express.static(clientBuildPath));
+  
+  // Toutes les requêtes non API sont redirigées vers l'app React
+  app.get('*', (req, res) => {
+    // Ne redirige pas les requêtes API
+    if (req.path.startsWith('/api/')) {
+      return next();
+    }
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
+
 
 // Debug middleware
 app.use((req, res, next) => {
@@ -72,7 +92,7 @@ app.use((err, req, res, next) => {
 async function initializeServer() {
   try {
     // 1. Connexion MongoDB
-    await mongoose.connect('mongodb+srv://doadmin:90P3dW54VMn27HX8@db-mongodb-lon1-44757-aa601f7a.mongo.ondigitalocean.com/CVPilotDatabase?authSource=admin', {
+    await mongoose.connect(process.env.MONGODB_URI_LOCAL||process.env.MONGODB_URI_DIGITALOCEAN, {
           retryWrites: true
       });
     console.log('Connected to MongoDB');

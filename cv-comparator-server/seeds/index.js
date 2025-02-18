@@ -4,7 +4,7 @@ const seedChannels = require('./channelSeeder');
 const runSeeders = async () => {
   try {
     // Connexion à MongoDB
-    await mongoose.connect('mongodb+srv://doadmin:90P3dW54VMn27HX8@db-mongodb-lon1-44757-aa601f7a.mongo.ondigitalocean.com/CVPilotDatabase?authSource=admin', {
+    await mongoose.connect(process.env.MONGODB_URI_LOCAL||process.env.MONGODB_URI_DIGITALOCEAN, {
       retryWrites: true
   });
     

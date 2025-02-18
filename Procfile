@@ -1,1 +1,1 @@
-web: cd cv-comparator-server && npm start
+web: cd cv-comparator-client && npm run build && cd ../cv-comparator-server && npm start

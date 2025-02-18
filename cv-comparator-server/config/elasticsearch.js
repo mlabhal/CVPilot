@@ -1,7 +1,7 @@
 const { Client } = require('@elastic/elasticsearch');
 
 const client = new Client({
-  node: 'https://165.22.113.118:9200',
+  node: process.env.ELASTICSEARCH_NODE_LOCAL || process.env.ELASTICSEARCH_NODE_DIGITALOCEAN,
   auth: {
     username: 'elastic',
     password: process.env.ELASTIC_PASSWORD
