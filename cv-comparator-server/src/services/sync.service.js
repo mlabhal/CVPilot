@@ -23,9 +23,15 @@ class SyncService {
   };
 
   static esClient = new Client({
-    node: SyncService.config.elasticsearch.node
+    node: SyncService.config.elasticsearch.node,
+    auth: {
+      username: SyncService.config.elasticsearch.auth.username,
+      password: SyncService.config.elasticsearch.auth.password
+    },
+    tls: {
+      rejectUnauthorized: SyncService.config.elasticsearch.tls.rejectUnauthorized
+    }
   });
-
   static async cleanupElasticsearchIndex() {
     try {
       console.log('Début du nettoyage de l\'index Elasticsearch...');
