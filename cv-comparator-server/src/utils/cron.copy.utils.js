@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 
 // Création du client Elasticsearch
 const esClient = new Client({
-  node: 'http://localhost:9200' // À adapter selon votre configuration
+  node: 'http://10.106.0.3:9200' // À adapter selon votre configuration
 });
 
 // Fonction principale qui gère à la fois les fichiers et Elasticsearch
