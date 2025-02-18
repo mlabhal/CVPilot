@@ -4,7 +4,7 @@ const client = new Client({
   node: 'https://165.22.113.118:9200',
   auth: {
     username: 'elastic',
-    password: 'EnxO-zdnSylpMewbIgdo'
+    password: process.env.ELASTIC_PASSWORD
   },
   tls: {
     rejectUnauthorized: false // À utiliser uniquement en développement
