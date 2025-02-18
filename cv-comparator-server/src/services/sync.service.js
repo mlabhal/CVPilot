@@ -5,7 +5,7 @@ const path = require('path');
 class SyncService {
   static config = {
     elasticsearch: {
-      node: process.env.ELASTICSEARCH_URL || 'http://10.106.0.3:9200',
+      node: process.env.ELASTICSEARCH_URL || 'http://165.22.113.118:9200',
       index: 'cvs',
       batchSize: 1000
     },

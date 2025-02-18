@@ -1,7 +1,7 @@
 const { Client } = require('@elastic/elasticsearch');
 
 const client = new Client({
-  node: 'http://10.106.0.3:9200'
+  node: 'http://165.22.113.118:9200'
 });
 
 async function setupElasticsearch() {
