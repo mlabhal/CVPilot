@@ -1,1 +1,1 @@
-web: cd cv-comparator-client && npm install vite typescript @vitejs/plugin-react --save-dev && npx tsc && npx vite build && cd ../cv-comparator-server && npm install && npm start
+web: npm install -g vite typescript && cd cv-comparator-client && npm install && npx tsc && npx vite build && cd ../cv-comparator-server && npm install && npm start
