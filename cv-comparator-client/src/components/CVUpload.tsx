@@ -2,7 +2,7 @@ import React, { useState, FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Upload } from 'lucide-react';
 import MultiInput from './MultiInput';
-import { fetchAuthApi } from '@/services/api';
+import { fetchAuthApi } from '../services/api';
 
 interface JobRequirements {
   skills: string[];
