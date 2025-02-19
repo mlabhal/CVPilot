@@ -27,7 +27,7 @@ const CVSearch: React.FC = () => {
     description: ''
   });
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://sea-turtle-app-xid5z.ondigitalocean.app';
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

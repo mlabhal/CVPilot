@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://sea-turtle-app-xid5z.ondigitalocean.app',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '') // Enlève le premier /api
       }

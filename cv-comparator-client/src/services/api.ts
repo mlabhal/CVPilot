@@ -1,7 +1,7 @@
 // services/api.ts
 import axios, { AxiosInstance } from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://sea-turtle-app-xid5z.ondigitalocean.app/api';
 
 interface ApiInstance extends AxiosInstance {
   auth: {

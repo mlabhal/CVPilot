@@ -80,7 +80,7 @@ function CVUpload() {
     });
 
     try {
-      const response = await fetch('http://localhost:3000/api/cv/compare', {
+      const response = await fetch('https://sea-turtle-app-xid5z.ondigitalocean.app/api/cv/compare', {
         method: 'POST',
         body: formData,
       });
