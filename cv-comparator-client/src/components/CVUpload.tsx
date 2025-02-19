@@ -2,7 +2,7 @@ import React, { useState, FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Upload } from 'lucide-react';
 import MultiInput from './MultiInput';
-import { fetchAuthApi } from '../services/api';
+import { API_BASE_URL } from '../services/api';
 
 interface JobRequirements {
   skills: string[];
@@ -81,13 +81,28 @@ function CVUpload() {
     });
 
     try {
-      const response = await fetchAuthApi('/api/cv/compare', {
+      // Création manuelle des options pour la requête multipart/form-data
+      const requestOptions: RequestInit = {
         method: 'POST',
         body: formData,
-      });
-
+        // Ne pas définir le Content-Type pour le multipart/form-data
+        // Le navigateur le configurera automatiquement avec le bon boundary
+      };
+      
+      // Ajouter le token d'authentification manuellement
+      const token = localStorage.getItem('token');
+      if (token) {
+        requestOptions.headers = {
+          'Authorization': `Bearer ${token}`
+        };
+      }
+      
+      // Faire la requête directement avec fetch
+      const response = await fetch(`${API_BASE_URL}/cv/compare`, requestOptions);
+      
       if (!response.ok) {
-        throw new Error('Échec de la comparaison des CVs');
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || `Échec de la comparaison des CVs (${response.status})`);
       }
 
       const data = await response.json();
@@ -100,6 +115,7 @@ function CVUpload() {
       });      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+      console.error('Erreur lors de la comparaison:', err);
     } finally {
       setLoading(false);
     }
