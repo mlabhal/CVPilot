@@ -6,6 +6,7 @@ import CVResultsPage from './components/CVResultsPage';  // Nouveau import
 import LoginForm from './components/auth/LoginForm';
 import RegisterForm from './components/auth/RegisterForm';
 import { Upload, Search, LogIn, UserPlus, LogOut} from 'lucide-react';
+import { fetchAuthApi } from './services/api';
 
 const MAUVE_COLOR = "#6366F1";  // Couleur indigo du logo
 const WHITE_COLOR = '#FFFFFF';
@@ -34,7 +35,7 @@ function App() {
           return;
         }
 
-        const response = await fetch('https://sea-turtle-app-xid5z.ondigitalocean.app/api/users/me', {
+        const response = await fetchAuthApi('/users/me', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
