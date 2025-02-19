@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(clientBuildPath));
   
   // Toutes les requêtes non API sont redirigées vers l'app React
-  app.get('*', (req, res) => {
+  app.get('*', (req, res, next) => {
     // Ne redirige pas les requêtes API
     if (req.path.startsWith('/api/')) {
       return next();
@@ -58,7 +58,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
 }
-
 
 // Debug middleware
 app.use((req, res, next) => {
