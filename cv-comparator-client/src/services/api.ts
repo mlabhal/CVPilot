@@ -1,5 +1,5 @@
 // services/api.ts
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 // Centralisation de l'URL de l'API
 export const API_URL = import.meta.env.VITE_API_URL || 'https://sea-turtle-app-xid5z.ondigitalocean.app';
