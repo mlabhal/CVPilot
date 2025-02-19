@@ -22,9 +22,9 @@ app.use(cors({
   maxAge: 86400
 }));
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Middleware avec limites augmentées
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Routes
 const channelRoutes = require('./routes/channel.routes');
