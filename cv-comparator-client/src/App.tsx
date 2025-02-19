@@ -35,7 +35,7 @@ function App() {
           return;
         }
 
-        const response = await fetchAuthApi('/users/me', {
+        const response = await fetchAuthApi('/api/users/me', {
           headers: {
             'Authorization': `Bearer ${token}`
           }

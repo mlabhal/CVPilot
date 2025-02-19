@@ -43,7 +43,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ channelId, channelSlug, user,
       .filter(tag => tag.length > 0);
   
     try {
-        const response = await fetch(`/channels/${channelSlug}/posts`, {
+        const response = await fetch(`/api/channels/${channelSlug}/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

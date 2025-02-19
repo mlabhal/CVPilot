@@ -81,7 +81,7 @@ function CVUpload() {
     });
 
     try {
-      const response = await fetchAuthApi('/cv/compare', {
+      const response = await fetchAuthApi('/api/cv/compare', {
         method: 'POST',
         body: formData,
       });

@@ -26,7 +26,7 @@ const Blog: React.FC<BlogProps> = ({ user }) => {
   const fetchChannelPosts = async (channelSlug: string) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetchAuthApi(`/channels/${channelSlug}/posts`, {
+      const response = await fetchAuthApi(`/api/channels/${channelSlug}/posts`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
