@@ -98,7 +98,7 @@ function CVUpload() {
       }
       
       // Faire la requête directement avec fetch
-      const response = await fetch(`${API_BASE_URL}/cv/compare`, requestOptions);
+      const response = await fetch(`${API_BASE_URL}/api/cv/compare`, requestOptions);
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
