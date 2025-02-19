@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Fond avec dégradé -->
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Hexagone de fond -->
+  <path d="M100 20 L170 60 L170 140 L100 180 L30 140 L30 60 Z" 
+        fill="url(#grad)" 
+        stroke="none"/>
+  <!-- Icône de document avec coin plié -->
+  <path d="M70 50 L120 50 L140 70 L140 150 L70 150 Z" 
+        fill="white" 
+        stroke="none"/>
+  <path d="M120 50 L120 70 L140 70" 
+        fill="#E2E8F0" 
+        stroke="none"/>
+  <!-- Texte sur deux lignes -->
+  <text x="85" y="85" 
+        font-family="Arial, sans-serif" 
+        font-weight="bold" 
+        font-size="20" 
+        fill="#6366F1">CV</text>
+  <text x="85" y="105" 
+        font-family="Arial, sans-serif" 
+        font-weight="bold" 
+        font-size="20" 
+        fill="#6366F1">Pilot</text>
+  <!-- Éléments IA -->
+  <circle cx="110" cy="125" r="12" fill="none" stroke="#6366F1" stroke-width="2"/>
+  <path d="M100 125 L120 125 M110 115 L110 135" 
+        stroke="#6366F1" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+  
+  <!-- Points de connexion -->
+  <circle cx="95" cy="125" r="2" fill="#6366F1"/>
+  <circle cx="125" cy="125" r="2" fill="#6366F1"/>
+  <circle cx="110" cy="110" r="2" fill="#6366F1"/>
+  <circle cx="110" cy="140" r="2" fill="#6366F1"/>
+</svg>
