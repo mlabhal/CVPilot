@@ -1,62 +1,23 @@
 const { Client } = require('@elastic/elasticsearch');
 const fs = require('fs').promises;
 const path = require('path');
+const esConfig = require('../../config/elasticsearch.config');
 
 class SyncService {
-  // Configuration conditionnelle selon l'environnement
-  static getElasticsearchConfig() {
-    // Détermine si on est en production ou développement
-    const isProduction = process.env.NODE_ENV === 'production';
-    const node = process.env.ELASTICSEARCH_NODE_DIGITALOCEAN || process.env.ELASTICSEARCH_NODE_LOCAL;
-    
-    // Configuration de base
-    const config = {
-      node: node,
-      tls: {
-        rejectUnauthorized: false // Garde la même configuration existante
-      },
-      index: 'cvs',
-      batchSize: 1000
-    };
-    
-    // Ajoute l'authentification uniquement en production
-    if (isProduction && process.env.ELASTIC_PASSWORD) {
-      config.auth = {
-        username: 'elastic',
-        password: process.env.ELASTIC_PASSWORD
-      };
-      console.log('Configuration Elasticsearch: Mode production avec authentification');
-    } else {
-      console.log('Configuration Elasticsearch: Mode développement sans authentification');
-    }
-    
-    return config;
-  }
-
   static config = {
-    elasticsearch: SyncService.getElasticsearchConfig(),
+    elasticsearch: {
+      ...esConfig.defaultConfig,
+      index: esConfig.index || 'cvs',
+      batchSize: esConfig.batchSize || 1000
+    },
     paths: {
       uploads: path.join(__dirname, '../../uploads'),
       backups: path.join(__dirname, '../../backups')
     }
   };
 
-  // Initialisation du client ES avec la configuration conditionnelle
-  static esClient = (() => {
-    const esConfig = {
-      node: SyncService.config.elasticsearch.node,
-      tls: {
-        rejectUnauthorized: SyncService.config.elasticsearch.tls.rejectUnauthorized
-      }
-    };
-
-    // Ajoute l'authentification seulement si configurée
-    if (SyncService.config.elasticsearch.auth) {
-      esConfig.auth = SyncService.config.elasticsearch.auth;
-    }
-
-    return new Client(esConfig);
-  })();
+  // Initialisation du client ES avec la configuration centralisée
+  static esClient = new Client(SyncService.config.elasticsearch);
 
   static async testConnection() {
     try {

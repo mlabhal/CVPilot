@@ -1,41 +1,96 @@
+// elasticsearch.js - version corrigée
 const { Client } = require('@elastic/elasticsearch');
+const esConfig = require('./elasticsearch.config');
 
-// Configuration conditionnelle du client Elasticsearch
-function createElasticsearchClient() {
-  const isProduction = process.env.NODE_ENV === 'production';
-  const node = process.env.ELASTICSEARCH_NODE_LOCAL || process.env.ELASTICSEARCH_NODE_DIGITALOCEAN;
-  
-  // Configuration de base
-  const config = {
-    node: node,
-    tls: {
-      rejectUnauthorized: false // À utiliser uniquement en développement
+const client = new Client(esConfig.defaultConfig);
+
+async function testConnection() {
+  try {
+    // Affiche la configuration utilisée
+    let connectionInfo = 'Non disponible';
+    try {
+      const connection = client.transport.getConnection();
+      if (connection) {
+        connectionInfo = connection.url;
+      }
+    } catch (connErr) {
+      console.warn('Impossible de récupérer les informations de connexion:', connErr.message);
     }
-  };
-  
-  // Ajoute l'authentification uniquement en production
-  if (isProduction && process.env.ELASTIC_PASSWORD) {
-    config.auth = {
-      username: 'elastic',
-      password: process.env.ELASTIC_PASSWORD
-    };
-    console.log('Client Elasticsearch: Mode production avec authentification');
-  } else {
-    console.log('Client Elasticsearch: Mode développement sans authentification');
+    
+    console.log('Tentative de connexion à:', connectionInfo);
+    console.log('Mode:', process.env.NODE_ENV || 'Non défini (utilisation des paramètres par défaut)');
+    
+    const ping = await client.ping();
+    console.log('Connexion à Elasticsearch réussie', ping);
+    
+    // Vérifier l'état de l'index
+    try {
+      const indexStatus = await client.indices.stats({ index: esConfig.index });
+      console.log('Statistiques de l\'index:', {
+        docsCount: indexStatus._all.total.docs.count,
+        size: indexStatus._all.total.store.size_in_bytes
+      });
+    } catch (indexErr) {
+      console.warn('L\'index n\'existe pas encore ou n\'est pas accessible');
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Échec de la connexion à Elasticsearch:', error);
+    
+    // Affiche des informations détaillées sur l'erreur d'authentification
+    if (error.meta && error.meta.statusCode === 401) {
+      console.error('Erreur 401: Problème d\'authentification');
+      console.error('Vérifiez les variables d\'environnement:');
+      console.error('- NODE_ENV est:', process.env.NODE_ENV);
+      console.error('- ELASTIC_PASSWORD est-il défini?', !!process.env.ELASTIC_PASSWORD);
+      console.error('- Paramètres d\'authentification:', client.transport.connectionPool?.connections?.[0]?.auth ? 'Présents' : 'Absents');
+    }
+    
+    // Renvoie false au lieu de lever une exception
+    return false;
   }
-  
-  return new Client(config);
 }
 
-const client = createElasticsearchClient();
+// Fonction utilitaire pour vérifier le contenu de l'index
+async function checkIndexContent() {
+  try {
+    const results = await client.search({
+      index: esConfig.index,
+      size: 100  // Ajustez selon vos besoins
+    });
+    
+    console.log('Contenu de l\'index:', {
+      total: results.hits.total.value,
+      documents: results.hits.hits.map(hit => ({
+        id: hit._id,
+        score: hit._score,
+        source: hit._source
+      }))
+    });
+    
+    return results.hits.hits;
+  } catch (error) {
+    console.error('Erreur lors de la vérification du contenu:', error);
+    // Retourne un tableau vide au lieu de lever une exception
+    return [];
+  }
+}
 
 async function setupElasticsearch() {
   try {
-    const indexExists = await client.indices.exists({ index: 'cvs' });
+    // Teste d'abord la connexion
+    const connected = await testConnection();
+    if (!connected) {
+      console.warn('Configuration d\'Elasticsearch ignorée en raison de problèmes de connexion');
+      return { success: false, message: 'Problème de connexion' };
+    }
+    
+    const indexExists = await client.indices.exists({ index: esConfig.index });
     
     if (!indexExists) {  // Seulement si l'index n'existe pas
       const response = await client.indices.create({
-        index: 'cvs',
+        index: esConfig.index,
         body: {
           settings: {
             number_of_shards: 1,
@@ -64,12 +119,12 @@ async function setupElasticsearch() {
         }
       });
       console.log('Nouvel index créé avec succès:', response);
-      return response;
+      return { success: true, message: 'Nouvel index créé' };
     }
 
     // Si l'index existe, on met à jour le mapping pour ajouter les experiences
     const updateMapping = await client.indices.putMapping({
-      index: 'cvs',
+      index: esConfig.index,
       body: {
         properties: {
           experiences: {
@@ -86,76 +141,21 @@ async function setupElasticsearch() {
     });
     console.log('Mapping mis à jour avec succès:', updateMapping);
 
-    const count = await client.count({ index: 'cvs' });
+    const count = await client.count({ index: esConfig.index });
     console.log('Documents existants dans l\'index:', count.count);
-    return { message: 'Index mis à jour et conservé', documentsCount: count.count };
+    return { 
+      success: true, 
+      message: 'Index mis à jour et conservé', 
+      documentsCount: count.count 
+    };
 
   } catch (error) {
     console.error('Erreur lors de la configuration d\'Elasticsearch:', error);
-    throw error;
-  }
-}
-
-async function testConnection() {
-  try {
-    // Affiche la configuration utilisée
-    console.log('Tentative de connexion à:', client.transport.getConnection().url);
-    if (process.env.NODE_ENV === 'production') {
-      console.log('Mode: Production');
-    } else {
-      console.log('Mode: Développement');
-    }
-    
-    const ping = await client.ping();
-    console.log('Connexion à Elasticsearch réussie', ping);
-    
-    // Vérifier l'état de l'index
-    const indexStatus = await client.indices.stats({ index: 'cvs' });
-    console.log('Statistiques de l\'index:', {
-      docsCount: indexStatus._all.total.docs.count,
-      size: indexStatus._all.total.store.size_in_bytes
-    });
-    
-    return true;
-  } catch (error) {
-    console.error('Échec de la connexion à Elasticsearch:', error);
-    
-    // Affiche des informations détaillées sur l'erreur d'authentification
-    if (error.meta && error.meta.statusCode === 401) {
-      console.error('Erreur 401: Problème d\'authentification');
-      console.error('Vérifiez les variables d\'environnement:');
-      console.error('- NODE_ENV est:', process.env.NODE_ENV);
-      console.error('- ELASTIC_PASSWORD est-il défini?', !!process.env.ELASTIC_PASSWORD);
-    }
-    
-    throw error;
-  }
-}
-
-// Fonction utilitaire pour vérifier le contenu de l'index
-async function checkIndexContent() {
-  try {
-    const results = await client.search({
-      index: 'cvs',
-      body: {
-        query: { match_all: {} },
-        size: 100  // Ajustez selon vos besoins
-      }
-    });
-    
-    console.log('Contenu de l\'index:', {
-      total: results.hits.total.value,
-      documents: results.hits.hits.map(hit => ({
-        id: hit._id,
-        score: hit._score,
-        source: hit._source
-      }))
-    });
-    
-    return results.hits.hits;
-  } catch (error) {
-    console.error('Erreur lors de la vérification du contenu:', error);
-    throw error;
+    return { 
+      success: false, 
+      message: 'Erreur de configuration',
+      error: error.message
+    };
   }
 }
 
@@ -163,5 +163,5 @@ module.exports = {
   client, 
   setupElasticsearch,
   testConnection,
-  checkIndexContent  // Export de la nouvelle fonction
+  checkIndexContent
 };
