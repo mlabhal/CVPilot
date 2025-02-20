@@ -48,8 +48,8 @@ api.interceptors.response.use(
 
 // Méthodes d'authentification
 api.auth = {
-  login: (data) => api.post('/api/users/login', data),
-  register: (data) => api.post('/api/users/register', data)
+  login: (data) => api.post('/users/login', data),
+  register: (data) => api.post('/users/register', data)
 };
 
 // Fonctions utilitaires pour d'autres composants
