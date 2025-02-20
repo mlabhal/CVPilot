@@ -1,15 +1,33 @@
 const { Client } = require('@elastic/elasticsearch');
 
-const client = new Client({
-  node: process.env.ELASTICSEARCH_NODE_LOCAL || process.env.ELASTICSEARCH_NODE_DIGITALOCEAN,
-  auth: {
-    username: 'elastic',
-    password: process.env.ELASTIC_PASSWORD
-  },
-  tls: {
-    rejectUnauthorized: false // À utiliser uniquement en développement
+// Configuration conditionnelle du client Elasticsearch
+function createElasticsearchClient() {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const node = process.env.ELASTICSEARCH_NODE_LOCAL || process.env.ELASTICSEARCH_NODE_DIGITALOCEAN;
+  
+  // Configuration de base
+  const config = {
+    node: node,
+    tls: {
+      rejectUnauthorized: false // À utiliser uniquement en développement
+    }
+  };
+  
+  // Ajoute l'authentification uniquement en production
+  if (isProduction && process.env.ELASTIC_PASSWORD) {
+    config.auth = {
+      username: 'elastic',
+      password: process.env.ELASTIC_PASSWORD
+    };
+    console.log('Client Elasticsearch: Mode production avec authentification');
+  } else {
+    console.log('Client Elasticsearch: Mode développement sans authentification');
   }
-});
+  
+  return new Client(config);
+}
+
+const client = createElasticsearchClient();
 
 async function setupElasticsearch() {
   try {
@@ -80,6 +98,14 @@ async function setupElasticsearch() {
 
 async function testConnection() {
   try {
+    // Affiche la configuration utilisée
+    console.log('Tentative de connexion à:', client.transport.getConnection().url);
+    if (process.env.NODE_ENV === 'production') {
+      console.log('Mode: Production');
+    } else {
+      console.log('Mode: Développement');
+    }
+    
     const ping = await client.ping();
     console.log('Connexion à Elasticsearch réussie', ping);
     
@@ -93,6 +119,15 @@ async function testConnection() {
     return true;
   } catch (error) {
     console.error('Échec de la connexion à Elasticsearch:', error);
+    
+    // Affiche des informations détaillées sur l'erreur d'authentification
+    if (error.meta && error.meta.statusCode === 401) {
+      console.error('Erreur 401: Problème d\'authentification');
+      console.error('Vérifiez les variables d\'environnement:');
+      console.error('- NODE_ENV est:', process.env.NODE_ENV);
+      console.error('- ELASTIC_PASSWORD est-il défini?', !!process.env.ELASTIC_PASSWORD);
+    }
+    
     throw error;
   }
 }

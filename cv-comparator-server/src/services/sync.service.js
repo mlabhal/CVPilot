@@ -3,35 +3,110 @@ const fs = require('fs').promises;
 const path = require('path');
 
 class SyncService {
-  static config = {
-    elasticsearch: {
-      node: process.env.ELASTICSEARCH_NODE_DIGITALOCEAN || process.env.ELASTICSEARCH_NODE_LOCAL,
-      auth: {
-        username: 'elastic',
-        password: process.env.ELASTIC_PASSWORD
-      },
+  // Configuration conditionnelle selon l'environnement
+  static getElasticsearchConfig() {
+    // Détermine si on est en production ou développement
+    const isProduction = process.env.NODE_ENV === 'production';
+    const node = process.env.ELASTICSEARCH_NODE_DIGITALOCEAN || process.env.ELASTICSEARCH_NODE_LOCAL;
+    
+    // Configuration de base
+    const config = {
+      node: node,
       tls: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false // Garde la même configuration existante
       },
       index: 'cvs',
       batchSize: 1000
-    },
+    };
+    
+    // Ajoute l'authentification uniquement en production
+    if (isProduction && process.env.ELASTIC_PASSWORD) {
+      config.auth = {
+        username: 'elastic',
+        password: process.env.ELASTIC_PASSWORD
+      };
+      console.log('Configuration Elasticsearch: Mode production avec authentification');
+    } else {
+      console.log('Configuration Elasticsearch: Mode développement sans authentification');
+    }
+    
+    return config;
+  }
+
+  static config = {
+    elasticsearch: SyncService.getElasticsearchConfig(),
     paths: {
       uploads: path.join(__dirname, '../../uploads'),
       backups: path.join(__dirname, '../../backups')
     }
   };
 
-  static esClient = new Client({
-    node: SyncService.config.elasticsearch.node,
-    auth: {
-      username: SyncService.config.elasticsearch.auth.username,
-      password: SyncService.config.elasticsearch.auth.password
-    },
-    tls: {
-      rejectUnauthorized: SyncService.config.elasticsearch.tls.rejectUnauthorized
+  // Initialisation du client ES avec la configuration conditionnelle
+  static esClient = (() => {
+    const esConfig = {
+      node: SyncService.config.elasticsearch.node,
+      tls: {
+        rejectUnauthorized: SyncService.config.elasticsearch.tls.rejectUnauthorized
+      }
+    };
+
+    // Ajoute l'authentification seulement si configurée
+    if (SyncService.config.elasticsearch.auth) {
+      esConfig.auth = SyncService.config.elasticsearch.auth;
     }
-  });
+
+    return new Client(esConfig);
+  })();
+
+  static async testConnection() {
+    try {
+      console.log('Test de connexion à Elasticsearch...');
+      console.log(`URL: ${this.config.elasticsearch.node}`);
+      if (this.config.elasticsearch.auth) {
+        console.log(`Authentification: ${this.config.elasticsearch.auth.username} / ***`);
+      } else {
+        console.log('Authentification: Désactivée');
+      }
+      
+      // Effectue un ping pour tester la connectivité
+      const pingResult = await this.esClient.ping();
+      console.log('Ping Elasticsearch réussi:', pingResult);
+      
+      // Teste les permissions de l'index
+      const indexExists = await this.esClient.indices.exists({
+        index: this.config.elasticsearch.index
+      });
+      
+      if (indexExists) {
+        console.log(`L'index ${this.config.elasticsearch.index} existe`);
+        
+        // Teste le comptage de documents (opération simple)
+        const countResult = await this.esClient.count({
+          index: this.config.elasticsearch.index
+        });
+        
+        console.log(`Nombre de documents dans l'index: ${countResult.count}`);
+        return true;
+      } else {
+        console.warn(`L'index ${this.config.elasticsearch.index} n'existe pas`);
+        return false;
+      }
+    } catch (error) {
+      console.error('Erreur lors du test de connexion Elasticsearch:', error);
+      
+      // Affiche des informations détaillées sur l'erreur d'authentification
+      if (error.meta && error.meta.statusCode === 401) {
+        console.error('Erreur 401: Problème d\'authentification');
+        console.error('Vérifiez les variables d\'environnement:');
+        console.error('- NODE_ENV est:', process.env.NODE_ENV);
+        console.error('- ELASTIC_PASSWORD est-il défini?', !!process.env.ELASTIC_PASSWORD);
+        console.error('- ELASTICSEARCH_NODE_DIGITALOCEAN est-il correct?', process.env.ELASTICSEARCH_NODE_DIGITALOCEAN);
+      }
+      
+      return false;
+    }
+  }
+
   static async cleanupElasticsearchIndex() {
     try {
       console.log('Début du nettoyage de l\'index Elasticsearch...');
@@ -141,7 +216,14 @@ class SyncService {
   static async initializeSyncService() {
     try {
       await fs.mkdir(this.config.paths.backups, { recursive: true });
-      console.log('Service de synchronisation initialisé');
+      
+      // Teste la connexion au démarrage
+      const connectionTest = await this.testConnection();
+      if (connectionTest) {
+        console.log('Service de synchronisation initialisé avec succès');
+      } else {
+        console.warn('Service de synchronisation initialisé avec des avertissements de connexion');
+      }
     } catch (error) {
       console.error('Erreur d\'initialisation du service de sync:', error);
       throw error;
@@ -152,14 +234,29 @@ class SyncService {
     try {
       console.log('Début de la synchronisation fichiers/Elasticsearch');
       
+      // Vérifie d'abord la connexion
+      const connectionTest = await this.testConnection();
+      if (!connectionTest) {
+        console.warn('Problème de connexion à Elasticsearch détecté, tentative de synchronisation quand même');
+      }
+      
       // 1. Backup de l'index avant modifications
-      await this.backupElasticsearchIndex();
+      try {
+        await this.backupElasticsearchIndex();
+      } catch (backupError) {
+        console.error('Erreur lors du backup, continuation de la synchronisation:', backupError.message);
+      }
       
       // 2. Nettoyage des fichiers physiques
       const { deletedFiles, keptFiles } = await this.cleanupFiles();
       
       // 3. Nettoyage de l'index Elasticsearch
-      const deletedFromES = await this.cleanupElasticsearchIndex();
+      let deletedFromES = null;
+      try {
+        deletedFromES = await this.cleanupElasticsearchIndex();
+      } catch (cleanupError) {
+        console.error('Erreur lors du nettoyage de l\'index ES:', cleanupError.message);
+      }
       
       return { 
         success: true, 
@@ -169,7 +266,15 @@ class SyncService {
       };
     } catch (error) {
       console.error('Erreur de synchronisation:', error);
-      throw error;
+      // Renvoie une erreur avec plus de détails au lieu de propager simplement
+      return {
+        success: false,
+        error: error.message,
+        details: error.meta ? {
+          statusCode: error.meta.statusCode,
+          body: error.meta.body
+        } : null
+      };
     }
   }
 
@@ -251,6 +356,7 @@ class SyncService {
     }
     return null;
   }
+
   static cleanPersonName(name) {
     return name
       // Remplace les tirets et underscores par des espaces
@@ -260,6 +366,7 @@ class SyncService {
       // Supprime les espaces en début et fin
       .trim();
   }
+
   static normalizePersonName(name) {
     if (!name) return null;
     
@@ -284,6 +391,7 @@ class SyncService {
       .join(' ')
       .trim();
   }
+
   static async cleanupFiles() {
     try {
       const files = await fs.readdir(this.config.paths.uploads);
