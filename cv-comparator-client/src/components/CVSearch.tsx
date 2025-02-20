@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import MultiInput from './MultiInput';
 import CVResultsPage from './CVResultsPage';
 import type { ApiResponse } from '../types';
+import { API_BASE_URL } from '../services/api';
 
 interface JobRequirements {
   skills: string[];
@@ -27,7 +28,7 @@ const CVSearch: React.FC = () => {
     description: ''
   });
 
-  const API_URL = import.meta.env.VITE_API_URL ;
+  
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -35,7 +36,7 @@ const CVSearch: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${API_URL}/api/cv/search`, {
+      const response = await fetch(`${API_BASE_URL}/cv/search`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

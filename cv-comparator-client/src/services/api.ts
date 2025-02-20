@@ -2,7 +2,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 // Centralisation de l'URL de l'API
-export const API_URL = import.meta.env.VITE_API_URL || 'https://sea-turtle-app-xid5z.ondigitalocean.app';
+export const API_URL = import.meta.env.VITE_API_URL ;
 export const API_BASE_URL = `${API_URL}/api`;
 
 // Interface pour les fonctions d'authentification
