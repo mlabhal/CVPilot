@@ -75,6 +75,8 @@ export interface Candidate {
   candidate_id: string;
   fileName :string;
   name: string;
+  phone_number:string;
+  email:string;
   summary?:string;
   status: string;
   skills: string[];
@@ -86,8 +88,9 @@ export interface Candidate {
   projects?:Projects[];
   matching_skills: string[];
   matching_tools: string[];
-  similarity_score: number;
+  totalScore: number;
   skill_match_percent: number;
+  tool_match_percent:number;
   description_match_score: number;
 }
 

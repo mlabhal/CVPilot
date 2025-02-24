@@ -1,93 +1,47 @@
-// routes/personalizedQuizRoutes.js
 const express = require('express');
 const router = express.Router();
-const { controller: personalizedQuizController, handleSingleUpload, handleMultipleUpload } = require('../controllers/personalizedQuizController');
-const auth = require('../middleware/auth'); // Utilisation de votre middleware auth existant
-const {
+const quizController = require('../controllers/quizController');
+const auth = require('../middleware/auth');
+const { validateRequirements, validateQuizRetrieval } = require('../middleware/validationMiddleware');
+
+// Middleware de vérification des permissions (à adapter selon vos besoins)
+const checkPermission = () => (req, res, next) => next();
+
+/**
+ * @route POST /api/quiz/generate
+ * @description Génère un quiz basé sur les requirements du poste
+ * @access Private
+ */
+router.post(
+  '/generate',
+  auth,
+  checkPermission(),
   validateRequirements,
-  validateIndexedQuizGeneration,
-  validateTopCandidatesQuizGeneration,
-  validateCVUpload,
-  validateQuizRetrieval
-} = require('../middleware/validationMiddleware');
-
-// Middleware pour vérifier les permissions - version simplifiée pour le développement
-const checkPermission = () => (req, res, next) => {
-  // Pour le développement, on accepte toutes les permissions
-  return next();
-};
-
-/**
- * @route POST /api/personalized-quiz/generate
- * @desc Génère un quiz personnalisé basé sur un CV et des requirements
- */
-router.post(
-  '/generate',  // Notez que le préfixe a été supprimé - c'est maintenant juste /generate
-  handleSingleUpload,
-  // auth, // Commenté pour les tests
-  checkPermission(),
-  validateCVUpload,
-  personalizedQuizController.generateQuizFromCV
+  (req, res) => quizController.generateQuiz(req, res)
 );
 
 /**
- * @route POST /api/personalized-quiz/bulk-generate
- * @desc Génère des quiz personnalisés pour plusieurs candidats
- */
-router.post(
-  '/bulk-generate', // Préfixe supprimé
-  handleMultipleUpload,
-  // auth, // Commenté pour les tests
-  checkPermission(),
-  validateCVUpload,
-  personalizedQuizController.generateBulkQuizzes
-);
-
-/**
- * @route GET /api/personalized-quiz/:quizId
- * @desc Récupère un quiz personnalisé complet par ID
+ * @route GET /api/quiz/:quizId
+ * @description Récupère un quiz complet avec les réponses (pour l'admin)
+ * @access Private
  */
 router.get(
-  '/:quizId', // Préfixe supprimé
-  // auth, // Commenté pour les tests
+  '/:quizId',
+  auth,
   checkPermission(),
   validateQuizRetrieval,
-  personalizedQuizController.getPersonalizedQuiz
+  (req, res) => quizController.getQuiz(req, res)
 );
 
 /**
- * @route GET /api/personalized-quiz/candidate/:quizId
- * @desc Récupère une version d'un quiz personnalisé pour un candidat (sans réponses)
- * @access Public (pas besoin d'authentification)
+ * @route GET /api/quiz/candidate/:quizId
+ * @description Récupère la version candidat du quiz (sans les réponses)
+ * @access Public
  */
 router.get(
-  '/candidate/:quizId', // Préfixe supprimé
+  '/candidate/:quizId',
   validateQuizRetrieval,
-  personalizedQuizController.getCandidateVersion
-);
-
-/**
- * @route POST /api/personalized-quiz/generate-from-indexed/:fileId
- * @desc Génère un quiz personnalisé basé sur un CV déjà indexé dans ElasticSearch
- */
-router.post(
-  '/generate-from-indexed/:fileId', // Préfixe supprimé
-  // auth, // Commenté pour les tests
-  checkPermission(),
-  validateIndexedQuizGeneration,
-  personalizedQuizController.generateQuizFromIndexedCV
-);
-
-/**
- * @route POST /api/personalized-quiz/generate-for-top-candidates
- * @desc Génère des quiz pour les meilleurs candidats correspondant aux requirements
- */
-router.post(
-  '/generate-for-top-candidates', // Préfixe supprimé
-  // auth, // Commenté pour les tests
-  checkPermission(),
-  validateTopCandidatesQuizGeneration,
-  personalizedQuizController.generateQuizzesForTopCandidates
+  (req, res) => quizController.getCandidateVersion(req, res)
 );
 
 module.exports = router;

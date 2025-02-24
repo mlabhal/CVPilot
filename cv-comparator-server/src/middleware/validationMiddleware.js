@@ -1,8 +1,7 @@
-// middleware/validationMiddleware.js
-const { body, param, query } = require('express-validator');
+const { body, param } = require('express-validator');
 
 /**
- * Validations pour les requirements
+ * Validations pour les requirements du poste
  */
 const validateRequirements = [
   body('requirements')
@@ -14,51 +13,64 @@ const validateRequirements = [
           if (typeof parsed !== 'object') {
             throw new Error('Les requirements doivent être un objet');
           }
+          
+          // Validation de la structure des requirements
+          const requiredFields = ['description', 'skills', 'tools'];
+          for (const field of requiredFields) {
+            if (!parsed[field]) {
+              throw new Error(`Le champ ${field} est requis dans les requirements`);
+            }
+          }
+          
+          // Validation des tableaux
+          if (!Array.isArray(parsed.skills) || parsed.skills.length === 0) {
+            throw new Error('Les skills doivent être un tableau non vide');
+          }
+          if (!Array.isArray(parsed.tools) || parsed.tools.length === 0) {
+            throw new Error('Les tools doivent être un tableau non vide');
+          }
+          
         } catch (e) {
-          throw new Error('Format JSON invalide pour les requirements');
+          throw new Error(`Validation des requirements échouée: ${e.message}`);
         }
       } else if (typeof value !== 'object') {
         throw new Error('Les requirements doivent être un objet');
       }
       return true;
-    })
-];
+    }),
 
-/**
- * Validations pour la génération de quiz depuis un CV indexé
- */
-const validateIndexedQuizGeneration = [
-  ...validateRequirements,
-  param('fileId')
-    .exists().withMessage('L\'ID du fichier est requis')
-    .isString().withMessage('L\'ID du fichier doit être une chaîne de caractères')
+  // Validation des champs individuels si fournis directement comme objet
+  body('requirements.description')
+    .if(body('requirements').isObject())
+    .exists().withMessage('La description du poste est requise')
+    .isString().withMessage('La description doit être une chaîne de caractères')
     .trim()
-    .notEmpty().withMessage('L\'ID du fichier ne peut pas être vide')
-];
+    .notEmpty().withMessage('La description ne peut pas être vide'),
 
-/**
- * Validations pour la génération de quiz pour les meilleurs candidats
- */
-const validateTopCandidatesQuizGeneration = [
-  ...validateRequirements,
-  query('limit')
+  body('requirements.skills')
+    .if(body('requirements').isObject())
+    .isArray().withMessage('Les skills doivent être un tableau')
+    .notEmpty().withMessage('Au moins une compétence est requise'),
+
+  body('requirements.tools')
+    .if(body('requirements').isObject())
+    .isArray().withMessage('Les tools doivent être un tableau')
+    .notEmpty().withMessage('Au moins un outil est requis'),
+
+  body('requirements.experience_years')
+    .if(body('requirements').isObject())
     .optional()
-    .isInt({ min: 1, max: 20 }).withMessage('La limite doit être un entier entre 1 et 20')
-    .toInt()
-];
+    .isInt({ min: 0 }).withMessage('Les années d\'expérience doivent être un nombre positif'),
 
-/**
- * Validations pour l'upload de CV
- */
-const validateCVUpload = [
-  ...validateRequirements,
-  body()
-    .custom((_, { req }) => {
-      if (!req.file && !req.files) {
-        throw new Error('Au moins un fichier CV est requis');
-      }
-      return true;
-    })
+  body('requirements.education')
+    .if(body('requirements').isObject())
+    .optional()
+    .isArray().withMessage('L\'éducation doit être un tableau'),
+
+  body('requirements.languages')
+    .if(body('requirements').isObject())
+    .optional()
+    .isArray().withMessage('Les langues doivent être un tableau')
 ];
 
 /**
@@ -72,8 +84,5 @@ const validateQuizRetrieval = [
 
 module.exports = {
   validateRequirements,
-  validateIndexedQuizGeneration,
-  validateTopCandidatesQuizGeneration,
-  validateCVUpload,
   validateQuizRetrieval
 };

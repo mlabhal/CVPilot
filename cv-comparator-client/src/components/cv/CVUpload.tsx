@@ -2,7 +2,7 @@ import React, { useState, FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Upload } from 'lucide-react';
 import MultiInput from './MultiInput';
-import { API_BASE_URL } from '../services/api';
+import { API_BASE_URL } from '../../services/api';
 
 interface JobRequirements {
   skills: string[];
@@ -123,12 +123,12 @@ function CVUpload() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white ">
       <div className="container mx-auto">
           <div className="p-8">
-            <h1 className="text-3xl font-bold mb-8">Analyseur de CV</h1>
+            <h1 className="text-3xl font-bold text-gray-600 mb-8">Analyseur de CV</h1>
             
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
+            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 border-2 border-indigo-100">
               {/* Champs des exigences */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {/* Champ description - Nouveau */}

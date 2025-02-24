@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Channel, Post } from '../types/index';
-import ChannelsList from './ChannelsList';
-import PostsList from './PostsList';
-import NewPostForm from './NewPostForm';
-import { User } from '../types/index';
+import { Channel, Post } from '../../types/index';
+import ChannelsList from '../channel/ChannelsList';
+import PostsList from '../post/PostsList';
+import NewPostForm from '../post/NewPostForm';
+import { User } from '../../types/index';
 import { fetchAuthApi } from '@/services/api';
 
 interface BlogProps {

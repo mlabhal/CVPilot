@@ -2,6 +2,11 @@
 const mongoose = require('mongoose');
 
 const RequirementSchema = new mongoose.Schema({
+  jobTitle: {
+    type: String,
+    required: true,
+    trim: true
+  },
   jobDescription: {
     type: String,
     required: true,

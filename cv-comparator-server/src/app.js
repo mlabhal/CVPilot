@@ -37,7 +37,7 @@ app.use('/api/channels', channelRoutes);
 app.use('/api/channels', postRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cv', cvRoutes);
-app.use('/api/personalized-quiz', quizRoutes);
+app.use('/api/quiz', quizRoutes);
 
 // Servir les fichiers statiques de React en production
 if (process.env.NODE_ENV === 'production') {

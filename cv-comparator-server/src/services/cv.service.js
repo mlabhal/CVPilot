@@ -109,10 +109,11 @@ class CVService {
             - Extraire TOUTES les informations pertinentes du CV
             - Établir les correspondances entre le profil et les requirements
             - Pour le résumé d'analyse :
-              * Évaluer l'adéquation globale du profil avec le poste
-              * Mettre en avant les points forts qui correspondent aux requirements
-              * Identifier les éventuels gaps ou points d'attention
-              * Si pas de requirements fournis, faire une analyse générale du profil
+              * Le résumé doit être court et la comparaison stricte entre les requirements et le CV.
+              * Évaluer l'adéquation du profil avec le poste.
+              * Mettre en avant les points forts du candidat qui correspondent aux requirements.
+              * Identifier les points d'attention et les compétences manquants.
+              * Si pas de requirements fournis, faire une analyse générale du profil.
           
             Instructions pour l'extraction :
             - Pour l'expérience : 
@@ -127,6 +128,8 @@ class CVService {
             Structure de réponse requise :
             {
               "summary":string, // Résumé détaillé de l'analyse et de l'adéquation avec le poste
+              "phone_number":string, // Numéro de téléphone du candidat
+              "email":string, // Adresse mail du candidat
               "skills": string[], // Liste complète des compétences identifiées dans le CV
               "tools": string[], // Liste complète des outils/technologies identifiés
               "education": string[], // Liste des formations/diplômes
@@ -330,14 +333,17 @@ class CVService {
     try {
       const defaultResult = {
         summary:"",
+        phone_number:"",
+        email:"",
         skills: [],
         tools: [],
         experience_years: 0,
         education: [],
         languages: [],
         experiences: [],
-        matching_skills: [], // Ajout
-        matching_tools: [],   // Ajout
+        matching_skills: [],
+        matching_tools: [],
+        tool_match_score: 0, // Ajout du score des outils par défaut
         certifications: [],
         projects: []
       };
@@ -384,18 +390,138 @@ class CVService {
           education: requirements.education || [],
           languages: requirements.languages || []
         };
-    
+        // Fonction utilitaire pour normaliser les mots
+        const normalizeWord = (word) => {
+          return word
+            .toLowerCase()
+            // Remplacer les caractères accentués
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            // Garder uniquement les lettres, chiffres et espaces
+            .replace(/[^a-z0-9\s]/g, ' ')
+            .trim();
+        };    
         // Construction de la requête Elasticsearch
         if (preparedRequirements.description) {
-          should.push({
-            match: {
-              "description": {
-                query: preparedRequirements.description,
-                boost: 2,
-                fuzziness: "AUTO"
+          // Extraction et nettoyage des mots-clés
+          const keywords = [...new Set(  // Utilisation de Set pour dédupliquer
+            preparedRequirements.description
+              .toLowerCase()
+              // Découper d'abord en mots
+              .split(/\s+/)
+              // Normaliser chaque mot
+              .map(word => normalizeWord(word))
+              // Filtrer les mots trop courts et les mots vides
+              .filter(word => word.length > 2 && word !== '')
+              // Filtrer les mots communs (stop words en français)
+              .filter(word => !['les', 'des', 'une', 'avec', 'pour', 'dans', 'tout', 'etc', 'leur'].includes(word))
+          )];
+          console.log('[SEARCH] Mots-clés extraits de la description:', keywords);
+        
+          if (keywords.length > 0) {
+            should.push(
+              // Recherche dans les compétences
+              {
+                terms: {
+                  "skills": keywords,
+                    boost: 3
+                  }
+                },
+              // Recherche dans les outils
+              {
+                terms: {
+                  "tools": keywords,
+                    boost: 2.5
+                  }
+              },
+              // Recherche dans les expériences
+              {
+                nested: {
+                  path: "experiences",
+                  query: {
+                    bool: {
+                      should: [
+                        // Dans les titres
+                        {
+                          match: {
+                            "experiences.title": {
+                              query: keywords.join(" "),
+                              boost: 2,
+                              operator: "or",
+                              fuzziness: "AUTO"
+                            }
+                          }
+                        },
+                        // Dans les descriptions
+                        {
+                          match: {
+                            "experiences.description": {
+                              query: keywords.join(" "),
+                              boost: 1.5,
+                              operator: "or",
+                              fuzziness: "AUTO"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  score_mode: "avg"
+                }
               }
-            }
-          });
+            );
+        
+            // Ajout d'un score minimum pour les correspondances
+            must.push({
+              bool: {
+                should: [
+                  // Au moins un mot-clé doit être trouvé dans les compétences
+                  {
+                    terms: {
+                      "skills": keywords
+                    }
+                  },
+                  // Ou dans les outils
+                  {
+                    terms: {
+                      "tools": keywords
+                    }
+                  },
+                  // Ou dans les expériences
+                  {
+                    nested: {
+                      path: "experiences",
+                      query: {
+                        bool: {
+                          should: [
+                            {
+                              match: {
+                                "experiences.title": {
+                                  query: keywords.join(" "),
+                                  operator: "or",
+                                  minimum_should_match: 1
+                                }
+                              }
+                            },
+                            {
+                              match: {
+                                "experiences.description": {
+                                  query: keywords.join(" "),
+                                  operator: "or",
+                                  minimum_should_match: 1
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ],
+                minimum_should_match: 1
+              }
+            });
+          }
         }
     
         if (preparedRequirements.skills.length) {
@@ -485,30 +611,38 @@ class CVService {
         // Trouver le score max pour la normalisation
         const maxScore = Math.max(...response.hits.hits.map(hit => hit._score || 0));
         
-        // Traitement des résultats avec score elasticsearch normalisé
         const results = response.hits.hits.map(hit => {
-            const cvData = hit._source;
-            const scores = this.calculateManualScore(cvData, preparedRequirements);
-            
-            // Normalisation du score elasticsearch en pourcentage
-            const normalizedElasticsearchScore = maxScore > 0 
-                ? ((hit._score || 0) / maxScore) * 100 
-                : 0;
-            
-            return {
-                ...cvData,
-                fileName: hit._id,
-                similarity_score: scores.totalScore,
-                skill_match_percent: scores.skillMatchPercent,
-                description_match_score: scores.description_match_score,
-                elasticsearch_score: Math.round(normalizedElasticsearchScore) // score sur 100
-            };
+          const cvData = hit._source;
+          const scores = this.calculateManualScore(cvData, preparedRequirements);
+          
+          // Normalisation du score elasticsearch en pourcentage
+          const normalizedElasticsearchScore = maxScore > 0 
+            ? ((hit._score || 0) / maxScore) * 100 
+            : 0;
+          
+          return {
+            ...cvData,
+            fileName: hit._id,
+            totalScore: scores.totalScore,
+            skill_match_percent: scores.skillMatchPercent,
+            tool_match_score: scores.toolsScore, // Ajout du score des outils
+            description_match_score: scores.description_match_score,
+            elasticsearch_score: Math.round(normalizedElasticsearchScore)
+          };
         });
     
         // Tri par score de similarité décroissant
-        results.sort((a, b) => (b.similarity_score || 0) - (a.similarity_score || 0));
+        results.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
     
-        return { rankings: results };
+        // Limitation à 5 résultats
+        const limitedResults = results.slice(0, 5);
+
+        console.log(`[SEARCH] Retour de ${limitedResults.length} CVs sur ${results.length} trouvés`);
+
+        return { 
+          rankings: limitedResults,
+          total_found: results.length
+        };
     
       } catch (error) {
         console.error('[SEARCH] Erreur:', error);
@@ -516,9 +650,9 @@ class CVService {
       }
     }
     
-  calculateManualScore(cvData, requirements) {
+    calculateManualScore(cvData, requirements) {
       // Initialisation des poids pour chaque critère
-      const weights = {
+      const baseWeights = {
         description: 0.25,
         skills: 0.25,
         tools: 0.20,
@@ -527,73 +661,112 @@ class CVService {
         languages: 0.05
       };
     
-      // Calcul du score de correspondance de description
-      const descriptionScore = this.calculateDescriptionMatchScore(
-        cvData,
-        requirements.description || ''
-      );
+      // Création d'un objet pour stocker les scores et les poids valides
+      let scores = {};
+      let validWeights = {};
+      let totalWeight = 0;
     
-      // Calcul du score pour les compétences
-      const skillsScore = this.calculateSkillsScore(
-        cvData.skills || [],
-        requirements.skills || []
-      );
+      // Vérification et calcul pour la description
+      if (requirements.description && requirements.description.trim() !== '') {
+        scores.description = this.calculateDescriptionMatchScore(
+          cvData,
+          requirements.description
+        );
+        validWeights.description = baseWeights.description;
+        totalWeight += baseWeights.description;
+      }
     
-      // Calcul du score pour les outils
-      const toolsScore = this.calculateSkillsScore(
-        cvData.tools || [],
-        requirements.tools || []
-      );
+      // Vérification et calcul pour les compétences
+      if (requirements.skills && Array.isArray(requirements.skills) && requirements.skills.length > 0) {
+        scores.skills = this.calculateSkillsScore(
+          cvData.skills || [],
+          requirements.skills
+        );
+        validWeights.skills = baseWeights.skills;
+        totalWeight += baseWeights.skills;
+      }
     
-      // Calcul du score pour l'expérience
-      const experienceScore = this.calculateExperienceScore(
-        cvData.experience_years || 0,
-        requirements.experience_years || 0
-      );
+      // Vérification et calcul pour les outils
+      if (requirements.tools && Array.isArray(requirements.tools) && requirements.tools.length > 0) {
+        scores.tools = this.calculateToolsScore(
+          cvData.tools || [],
+          requirements.tools
+        );
+        validWeights.tools = baseWeights.tools;
+        totalWeight += baseWeights.tools;
+      }
     
-      // Calcul du score pour l'éducation
-      const educationScore = this.calculateSkillsScore(
-        cvData.education || [],
-        requirements.education || []
-      );
+      // Vérification et calcul pour l'expérience
+      if (requirements.experience_years && requirements.experience_years > 0) {
+        scores.experience = this.calculateExperienceScore(
+          cvData.experience_years || 0,
+          requirements.experience_years
+        );
+        validWeights.experience = baseWeights.experience;
+        totalWeight += baseWeights.experience;
+      }
     
-      // Calcul du score pour les langues
-      const languagesScore = this.calculateSkillsScore(
-        cvData.languages || [],
-        requirements.languages || []
-      );
+      // Vérification et calcul pour l'éducation
+      if (requirements.education && Array.isArray(requirements.education) && requirements.education.length > 0) {
+        scores.education = this.calculateSkillsScore(
+          cvData.education || [],
+          requirements.education
+        );
+        validWeights.education = baseWeights.education;
+        totalWeight += baseWeights.education;
+      }
     
-      // Calcul du score total pondéré
-      const totalScore = (
-        (descriptionScore * weights.description) +
-        (skillsScore * weights.skills) +
-        (toolsScore * weights.tools) +
-        (experienceScore * weights.experience) +
-        (educationScore * weights.education) +
-        (languagesScore * weights.languages)
-      );
+      // Vérification et calcul pour les langues
+      if (requirements.languages && Array.isArray(requirements.languages) && requirements.languages.length > 0) {
+        scores.languages = this.calculateSkillsScore(
+          cvData.languages || [],
+          requirements.languages
+        );
+        validWeights.languages = baseWeights.languages;
+        totalWeight += baseWeights.languages;
+      }
+    
+      // Normalisation des poids si certains critères sont exclus
+      let normalizedWeights = {};
+      if (totalWeight > 0) {
+        for (let key in validWeights) {
+          normalizedWeights[key] = validWeights[key] / totalWeight;
+        }
+      }
+    
+      // Calcul du score total avec les poids normalisés
+      let totalScore = 0;
+      for (let key in scores) {
+        totalScore += scores[key] * normalizedWeights[key];
+      }
     
       // Identification des compétences et outils correspondants
-      const matchingSkills = this.findMatches(
-        cvData.skills || [],
-        requirements.skills || []
-      );
+      const matchingSkills = requirements.skills && Array.isArray(requirements.skills) && requirements.skills.length > 0
+        ? this.findMatches(cvData.skills || [], requirements.skills)
+        : [];
     
-      const matchingTools = this.findMatches(
-        cvData.tools || [],
-        requirements.tools || []
-      );
+      const matchingTools = requirements.tools && Array.isArray(requirements.tools) && requirements.tools.length > 0
+        ? this.findMatches(cvData.tools || [], requirements.tools)
+        : [];
     
-      const skillMatchPercent = requirements.skills.length > 0
-        ? (matchingSkills.length / requirements.skills.length) * 100
-        : 100;
+      // Calcul des pourcentages de correspondance
+      const hasSkillsRequirement = requirements.skills && Array.isArray(requirements.skills) && requirements.skills.length > 0;
+      const hasToolsRequirement = requirements.tools && Array.isArray(requirements.tools) && requirements.tools.length > 0;
     
       return {
-        totalScore: Math.min(1, Math.max(0, totalScore)),
-        description_match_score: descriptionScore,
-        skillMatchPercent: Math.round(skillMatchPercent),
+        totalScore: totalWeight > 0 ? Math.min(1, Math.max(0, totalScore)) : null,
+        description_match_score: requirements.description && requirements.description.trim() !== '' 
+          ? scores.description || 0 
+          : null,
+        skillMatchPercent: hasSkillsRequirement 
+          ? Math.round((matchingSkills.length / requirements.skills.length) * 100)
+          : null,
+        toolMatchPercent: hasToolsRequirement
+          ? Math.round((matchingTools.length / requirements.tools.length) * 100)
+          : null,
         matchingSkills,
-        matchingTools
+        matchingTools,
+        toolsScore: hasToolsRequirement ? (scores.tools || 0) : null
       };
     }
     
@@ -663,163 +836,192 @@ class CVService {
       // Le score est le ratio de mots correspondants sur le total des mots de la description
       return matchingWords.length / descriptionWords.length;
     }
-
+  calculateToolsScore(candidateTools, requiredTools) {
+      if (!requiredTools || requiredTools.length === 0) return 1;
+      if (!candidateTools || candidateTools.length === 0) return 0;
+    
+      const matches = this.findMatches(candidateTools, requiredTools);
+      const score = matches.length / requiredTools.length;
+    
+      console.log('[SCORING] Tools score calculation:', {
+        candidateTools,
+        requiredTools,
+        matches,
+        score
+      });
+    
+      return score;
+    }
 
   async indexCV(analysis, fileName) {
-    try {
-      console.log('[INDEXATION] Début indexation pour fichier:', fileName);
-      console.log('[INDEXATION] Client ES disponible:', !!client);
-  
-      // Vérification des paramètres
-      if (!fileName) {
-        throw new Error('Nom de fichier manquant pour l\'indexation');
-      }
-  
-      console.log('[DEBUG] Données d\'analyse reçues:', JSON.stringify(analysis, null, 2));
-  
-      if (!analysis) {
-        console.warn('[INDEXATION] Aucune analyse fournie, utilisation des valeurs par défaut');
-        analysis = {};
-      }
-  
-      // Préparation des données avec validation approfondie
-      const indexData = {
-        fileName: fileName,
-        skills: (() => {
-          const skills = Array.isArray(analysis.skills) ? analysis.skills : [];
-          console.log('[DEBUG] Skills extraits:', skills);
-          return skills;
-        })(),
-        tools: (() => {
-          const tools = Array.isArray(analysis.tools) ? analysis.tools : [];
-          console.log('[DEBUG] Tools extraits:', tools);
-          return tools;
-        })(),
-        experience_years: (() => {
-          const years = Number(analysis.experience_years) || 0;
-          console.log('[DEBUG] Années d\'expérience:', years);
-          return years;
-        })(),
-        education: (() => {
-          const education = Array.isArray(analysis.education)
-            ? analysis.education.map(edu => {
-                if (typeof edu === 'object') {
-                  const formattedEdu = `${edu.degree || ''} ${edu.institution || ''}`.trim();
-                  console.log('[DEBUG] Education formatée:', formattedEdu);
-                  return formattedEdu;
-                }
-                return edu;
-              })
-            : [];
-          console.log('[DEBUG] Education extraite:', education);
-          return education;
-        })(),
-        languages: (() => {
-          const languages = Array.isArray(analysis.languages) ? analysis.languages : [];
-          console.log('[DEBUG] Langues extraites:', languages);
-          return languages;
-        })(),
-        experiences: (() => {
-          const experiences = Array.isArray(analysis.experiences) 
-            ? analysis.experiences.map(exp => ({
-                title: exp.title || '',
-                company: exp.company || '',
-                description: exp.description || '',
-                duration: exp.duration || '',
-                duration_in_months: exp.duration_in_months || 0 
-              }))
-            : [];
-          console.log('[DEBUG] Expériences extraites:', experiences);
-          return experiences;
-        })(),
-        indexed_date: new Date().toISOString()
-      };
-  
-      console.log('[DEBUG] Données préparées pour indexation:', JSON.stringify(indexData, null, 2));
-  
-      // Vérification de l'existence de l'index
-      const indexExists = await client.indices.exists({
-        index: 'cvs'
-      });
-  
-      if (!indexExists) {
-        console.warn('[INDEXATION] Index cvs n\'existe pas, création...');
-        await client.indices.create({
-          index: 'cvs',
-          body: {
-            mappings: {
-              properties: {
-                fileName: { type: 'keyword' },
-                skills: { type: 'keyword' },
-                tools: { type: 'keyword' },
-                experience_years: { type: 'integer' },
-                education: { type: 'keyword' },
-                languages: { type: 'keyword' },
-                experiences: {
-                  type: 'nested',
-                  properties: {
-                    title: { type: 'text' },
-                    company: { type: 'text' },
-                    description: { type: 'text' },
-                    duration: { type: 'text' },
-                    duration_in_months: { type: 'integer' }
+      try {
+        console.log('[INDEXATION] Début indexation pour fichier:', fileName);
+        console.log('[INDEXATION] Client ES disponible:', !!client);
+    
+        // Vérification des paramètres
+        if (!fileName) {
+          throw new Error('Nom de fichier manquant pour l\'indexation');
+        }
+    
+        console.log('[DEBUG] Données d\'analyse reçues:', JSON.stringify(analysis, null, 2));
+    
+        if (!analysis) {
+          console.warn('[INDEXATION] Aucune analyse fournie, utilisation des valeurs par défaut');
+          analysis = {};
+        }
+    
+        // Préparation des données avec validation approfondie
+        const indexData = {
+          fileName: fileName,
+          // Ajout des champs phone_number et email
+          phone_number: (() => {
+            const phone = analysis.phone_number || '';
+            console.log('[DEBUG] Numéro de téléphone extrait:', phone);
+            return phone;
+          })(),
+          email: (() => {
+            const email = analysis.email || '';
+            console.log('[DEBUG] Email extrait:', email);
+            return email;
+          })(),
+          skills: (() => {
+            const skills = Array.isArray(analysis.skills) ? analysis.skills : [];
+            console.log('[DEBUG] Skills extraits:', skills);
+            return skills;
+          })(),
+          tools: (() => {
+            const tools = Array.isArray(analysis.tools) ? analysis.tools : [];
+            console.log('[DEBUG] Tools extraits:', tools);
+            return tools;
+          })(),
+          experience_years: (() => {
+            const years = Number(analysis.experience_years) || 0;
+            console.log('[DEBUG] Années d\'expérience:', years);
+            return years;
+          })(),
+          education: (() => {
+            const education = Array.isArray(analysis.education)
+              ? analysis.education.map(edu => {
+                  if (typeof edu === 'object') {
+                    const formattedEdu = `${edu.degree || ''} ${edu.institution || ''}`.trim();
+                    console.log('[DEBUG] Education formatée:', formattedEdu);
+                    return formattedEdu;
                   }
-                },
-                indexed_date: { type: 'date' }
+                  return edu;
+                })
+              : [];
+            console.log('[DEBUG] Education extraite:', education);
+            return education;
+          })(),
+          languages: (() => {
+            const languages = Array.isArray(analysis.languages) ? analysis.languages : [];
+            console.log('[DEBUG] Langues extraites:', languages);
+            return languages;
+          })(),
+          experiences: (() => {
+            const experiences = Array.isArray(analysis.experiences) 
+              ? analysis.experiences.map(exp => ({
+                  title: exp.title || '',
+                  company: exp.company || '',
+                  description: exp.description || '',
+                  duration: exp.duration || '',
+                  duration_in_months: exp.duration_in_months || 0 
+                }))
+              : [];
+            console.log('[DEBUG] Expériences extraites:', experiences);
+            return experiences;
+          })(),
+          indexed_date: new Date().toISOString()
+        };
+    
+        console.log('[DEBUG] Données préparées pour indexation:', JSON.stringify(indexData, null, 2));
+    
+        // Vérification de l'existence de l'index
+        const indexExists = await client.indices.exists({
+          index: 'cvs'
+        });
+    
+        if (!indexExists) {
+          console.warn('[INDEXATION] Index cvs n\'existe pas, création...');
+          await client.indices.create({
+            index: 'cvs',
+            body: {
+              mappings: {
+                properties: {
+                  fileName: { type: 'keyword' },
+                  // Ajout du mapping pour phone_number et email
+                  phone_number: { type: 'keyword' },
+                  email: { type: 'keyword' },
+                  skills: { type: 'keyword' },
+                  tools: { type: 'keyword' },
+                  experience_years: { type: 'integer' },
+                  education: { type: 'keyword' },
+                  languages: { type: 'keyword' },
+                  experiences: {
+                    type: 'nested',
+                    properties: {
+                      title: { type: 'text' },
+                      company: { type: 'text' },
+                      description: { type: 'text' },
+                      duration: { type: 'text' },
+                      duration_in_months: { type: 'integer' }
+                    }
+                  },
+                  indexed_date: { type: 'date' }
+                }
               }
             }
-          }
-        });
-      }
-  
-      // Indexation avec retry
-      let retries = 3;
-      let response;
-  
-      while (retries > 0) {
-        try {
-          response = await client.index({
-            index: 'cvs',
-            id: fileName,
-            body: indexData,
-            refresh: true
           });
-          break;
-        } catch (retryError) {
-          retries--;
-          if (retries === 0) throw retryError;
-          console.warn(`[INDEXATION] Tentative échouée, reste ${retries} essais`);
-          await new Promise(resolve => setTimeout(resolve, 1000));
         }
+    
+        // Indexation avec retry
+        let retries = 3;
+        let response;
+    
+        while (retries > 0) {
+          try {
+            response = await client.index({
+              index: 'cvs',
+              id: fileName,
+              body: indexData,
+              refresh: true
+            });
+            break;
+          } catch (retryError) {
+            retries--;
+            if (retries === 0) throw retryError;
+            console.warn(`[INDEXATION] Tentative échouée, reste ${retries} essais`);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+        }
+    
+        console.log('[INDEXATION] Réponse complète ES:', response);
+        console.log('[INDEXATION] Résultat:', {
+          success: true,
+          documentId: response._id,
+          result: response.result
+        });
+    
+        // Vérification de l'indexation
+        const indexed = await client.get({
+          index: 'cvs',
+          id: fileName
+        });
+    
+        console.log('[INDEXATION] Vérification document indexé:', indexed._source);
+    
+        return true;
+    
+      } catch (error) {
+        console.error('[INDEXATION] Erreur complète:', {
+          message: error.message,
+          stack: error.stack,
+          name: error.name
+        });
+        return false;
       }
-  
-      console.log('[INDEXATION] Réponse complète ES:', response);
-      console.log('[INDEXATION] Résultat:', {
-        success: true,
-        documentId: response._id,
-        result: response.result
-      });
-  
-      // Vérification de l'indexation
-      const indexed = await client.get({
-        index: 'cvs',
-        id: fileName
-      });
-  
-      console.log('[INDEXATION] Vérification document indexé:', indexed._source);
-  
-      return true;
-  
-    } catch (error) {
-      console.error('[INDEXATION] Erreur complète:', {
-        message: error.message,
-        stack: error.stack,
-        name: error.name
-      });
-      return false;
     }
-  }
-
+  
   async cleanupFile(filePath) {
     try {
       await fs.unlink(filePath);

@@ -1,0 +1,1268 @@
+[
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL-05122024.docx",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL-05122024.docx",
+      "phone_number": "06 69 79 62 23",
+      "email": "labhalmehdi@gmail.com",
+      "skills": [
+        "Gestion de Projet",
+        "Agile Scrum",
+        "Priorisation du Backlog",
+        "Test & QA"
+      ],
+      "tools": [
+        "Jira",
+        "Excel",
+        "Sciforma",
+        "AMPLITUDE"
+      ],
+      "experience_years": 6,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique – INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP – Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum – SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS",
+          "description": "Analyse des besoins métiers, Rédaction des User Stories et gestion du Backlog, Animation et Compte rendu des ateliers métiers, Priorisation des besoins, Livraison du produit sous les délais, Estimation du Plan de charge, Recette de la solution, Elaboration de la Roadmap, Rédaction des guides utilisateurs.",
+          "duration": "06/2023 - 02/2025",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Chef de produit OUTILS IT",
+          "company": "SII SERVICES Maroc : Client “Bouygues Telecom France”",
+          "description": "Analyse des besoins métiers, Maintenance évolutive et corrective des outils existants, Rédaction des User Stories et gestion du Backlog, Animation et Compte rendu des ateliers métiers, Priorisation des besoins, Reporting PMO, Recette de la solution, Elaboration de la Roadmap, Modélisation des process.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Chef de produit CORPORATE",
+          "company": "SII SERVICES Maroc : Client “CREDIT DU MAROC”",
+          "description": "Analyse et cadrage du besoin métier, Rédaction des User Stories, Epic, Feature et Roadmap, Animation des ateliers métiers, Reporting PMO, Recette de la solution, Elaboration de la ROADMAP projet, Modélisation des process Cash Management.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Chef de projet Retail Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, Préparation des supports, Etablissement des procédures, Rédaction des user-stories, Priorisation des Epic, Recette sur Core Banking, Collaboration avec l’équipe Dev, Animation d'ateliers, Définition des OKR, Participation aux séances de Démo, Initiation des instances Agile.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablir la définition fonctionnelle du projet, Rédaction des spécifications, Conception des besoins, Animation des ateliers, Suivi des développements, Rédaction des cahiers de recette, Mise en production des projets, Pilotage du projet, Conduite du changement, Modélisation des processus.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, Préparation de l’environnement de DEV.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        }
+      ],
+      "indexed_date": "2025-02-20T12:11:26.864Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1740157870151-CV-Mehdi-LABHAL.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1740157870151-CV-Mehdi-LABHAL.pdf",
+      "phone_number": "",
+      "email": "",
+      "skills": [
+        "Gestion de Projet",
+        "Analyse des besoins",
+        "Spécifications fonctionnelles et techniques",
+        "Modélisation des processus",
+        "Recette",
+        "Formation",
+        "Conduite du changement",
+        "Agile Scrum"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "JIRA",
+        "MS Project",
+        "MEGA",
+        "Linux",
+        "MySQL"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique – INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP – Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum – SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS (Theodo Group)",
+          "description": "Analyse des besoins métiers, rédaction des spécifications fonctionnelles et techniques, gestion du backlog, animation des rituels agiles, livraison du produit, estimation du plan de charge, recette de la solution, élaboration de la roadmap.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Product Owner OUTILS IT",
+          "company": "SII SERVICES Maroc (Client Bouygues Telecom France)",
+          "description": "Analyse des besoins métiers, maintenance évolutive et corrective des outils existants, gestion du backlog, modélisation des processus, recette de la solution, élaboration de la roadmap.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Product Owner CORPORATE",
+          "company": "SII SERVICES Maroc (Client CREDIT DU MAROC)",
+          "description": "Analyse et cadrage du besoin métier, rédaction des user stories, animation des ateliers métiers, priorisation des fonctionnalités, recette de la solution, modélisation des processus.",
+          "duration": "06/2024 - 02/2025",
+          "duration_in_months": 8
+        },
+        {
+          "title": "Chef de projet Retail Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, préparation des supports, rédaction des user stories, recette sur Core Banking Amplitude, collaboration avec l'équipe Dev, définition des OKR, participation aux séances de démo.",
+          "duration": "02/2025 - 02/2025",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablissement de la définition fonctionnelle, rédaction des spécifications, suivi des développements, recette fonctionnelle, mise en production, pilotage du projet, conduite du changement.",
+          "duration": "02/2025 - 02/2025",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, préparation de l'environnement de DEV.",
+          "duration": "02/2025 - 02/2025",
+          "duration_in_months": 0
+        }
+      ],
+      "indexed_date": "2025-02-21T17:11:20.292Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV LABHAL Mehdi (8).pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV LABHAL Mehdi (8).pdf",
+      "phone_number": "0669796223",
+      "email": "labhalmehdi@gmail.com",
+      "skills": [
+        "Test & Qualité",
+        "Agile Scrum",
+        "Certification SCRUM PO",
+        "JavaScript",
+        "Node.js"
+      ],
+      "tools": [
+        "Jira"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme ingénieur d'état en informatique",
+        "Formation AMPLITUDE Core Banking"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "N/A",
+          "description": "Conception et livraison d'une plateforme de fidélité pour le client WINXO en approche agile.",
+          "duration": "06/2024 - 12/2024",
+          "duration_in_months": 6
+        },
+        {
+          "title": "Product Owner",
+          "company": "N/A",
+          "description": "Accompagnement des clients CDM et BOUYGUES TELECOM sur la réalisation des roadmaps digitales. Gestion du backlog sous Jira.",
+          "duration": "11/2022 - 04/2024",
+          "duration_in_months": 17
+        },
+        {
+          "title": "Chef de projet Retail",
+          "company": "N/A",
+          "description": "Analyse et optimisation des process de gestion des réclamations client. Assistance sur le projet de mobilité bancaire.",
+          "duration": "03/2021 - 09/2022",
+          "duration_in_months": 18
+        },
+        {
+          "title": "Chef de projet Web et Systèmes de Paiement",
+          "company": "N/A",
+          "description": "Suivi de projets internes pour Orange, de la phase de cadrage à la mise en production. Conduite de changement et formation.",
+          "duration": "08/2018 - 02/2021",
+          "duration_in_months": 30
+        },
+        {
+          "title": "Développeur Python",
+          "company": "N/A",
+          "description": "Développement de scripts et plugins en Python pour faciliter l'installation d'équipements télécoms.",
+          "duration": "02/2018 - 07/2018",
+          "duration_in_months": 5
+        }
+      ],
+      "indexed_date": "2025-02-20T11:44:44.690Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL-05012025.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL-05012025.pdf",
+      "phone_number": "06 69 79 62 23",
+      "email": "labhalmehdi@gmail.com",
+      "skills": [
+        "Gestion de Projet",
+        "Modélisation",
+        "Recette",
+        "Conduite du changement",
+        "Analyse des besoins",
+        "Priorisation",
+        "Rédaction des User Stories",
+        "Animation d'ateliers",
+        "Gestion de Roadmap"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "JIRA",
+        "MS Project",
+        "UML",
+        "BPMN",
+        "Python",
+        "Java",
+        "Linux",
+        "MySQL",
+        "REST/SOAP API"
+      ],
+      "experience_years": 6,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique - INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP - Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum - SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS",
+          "description": "Analyse des besoins métiers, Rédaction des User Stories, Animation des rituels agiles, Livraison du produit sous les délais, Elaboration de la Roadmap avec le client.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Product Owner OUTILS IT",
+          "company": "SII SERVICES Maroc (Client Bouygues Telecom France)",
+          "description": "Analyse des besoins métiers, Maintenance évolutive et corrective des outils existants, Priorisation des besoins, Reporting PMO, Modélisation des process avec les métiers.",
+          "duration": "06/2023 - 02/2025",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Product Owner CORPORATE",
+          "company": "SII SERVICES Maroc (Client CREDIT DU MAROC)",
+          "description": "Analyse et cadrage du besoin métier, Rédaction des User Stories, Animation des séances de brainstorming, Priorisation des Macro Fonctionnalités, Modélisation des process Cash Management.",
+          "duration": "06/2023 - aujourd'hui",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Chef de projet Retail Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, Etablissement des procédures, Rédaction des user-stories, Recette sur Core Banking Amplitude, Animation d'ateliers techniques et stratégiques.",
+          "duration": "06/2022 - 02/2023",
+          "duration_in_months": 8
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablir la définition fonctionnelle du projet, Suivi des développements, Recette fonctionnelle, Conduite du changement, Gestion d'appel d'offre.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, Préparation de l'environnement de DEV.",
+          "duration": "Date inconnue",
+          "duration_in_months": 0
+        }
+      ],
+      "indexed_date": "2025-02-21T19:59:15.069Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1740167443439-CV-Faiza-Chtita-23.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1740167443439-CV-Faiza-Chtita-23.pdf",
+      "phone_number": "+212700728275",
+      "email": "Fayza.chtita@gmail.com",
+      "skills": [
+        "Agile",
+        "Business Analysis",
+        "Project Management",
+        "Change Management",
+        "Quality Assurance"
+      ],
+      "tools": [
+        "Datastage",
+        "Qlik Sense",
+        "Power BI",
+        "Microstrategy",
+        "Oracle",
+        "Teradata",
+        "MySQL",
+        "Jira",
+        "Excel"
+      ],
+      "experience_years": 5,
+      "education": [
+        "Diplômée Ingénieur d’Etat à L’Institut National de Statistique et d’Economie Appliquée (Filière Ingénierie de données et informatique décisionnelle – BI)",
+        "Formation certifiante en BIGDATA par IBM",
+        "Formation et Certification Scrum Foundation Professional (SFPC)",
+        "Formation Certifiante Power BI-DATACAMP"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Chef de projet BI confirmé|Business Analyst",
+          "company": "SOCIETE GENERALE",
+          "description": "Agir en tant que liaison entre les équipes produit, métier et informatique pour comprendre la demande de nouvelles fonctionnalités et prioriser la feuille de route produit. Animation d'ateliers techniques et stratégiques. Prise en charge de la gestion du backlog produit avec Jira. Répondre aux problèmes techniques et supprimer les obstacles avec des solutions innovantes. Homologation des projets post prod et analyse des écarts avec les métiers. Production de tableaux de bord sur Power BI et IBM Cognos Analytics. Conduite du changement: rédaction de guides utilisateurs, formation et assistance aux utilisateurs.",
+          "duration": "06/2020 - 02/2025",
+          "duration_in_months": 57
+        },
+        {
+          "title": "Data Analyst-Qlik Sense",
+          "company": "BANQUE CENTRALE POPULAIRE",
+          "description": "Rédaction des cahiers des charges. Cadrage et analyse des besoins fonctionnels et techniques. Accompagnement et suivi des développements (outil Qlik Sense). Réalisation des tests et recettes métiers. Pilotage du déploiement de la solution BI (Qlik Sense). Organisation et animation des ateliers avec les différentes parties prenantes. Création des tableaux de bord pour l’ensemble des entités internes. Pilotage du portefeuille RH (Budget, Planning, Risque, Qualité & FDR). Animation du processus de l’audit qualité selon la norme ISO 9001.",
+          "duration": "10/2020 - 06/2022",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Consultante BI -Datastage|Power BI|Microstrategy",
+          "company": "CGI MAROC",
+          "description": "Cadrage et analyse des besoins fonctionnels et techniques. Développement des Flux ETL (DataStage). Gestion des tickets et incidents. Réalisation des tests et recettes techniques, packaging (Jenkins). Génération des tableaux de bord (Microstrategy, Power BI). Travail en agilité.",
+          "duration": "02/2019 - 10/2020",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Consultante BI -TIBCO",
+          "company": "CAPGEMINI",
+          "description": "Migration des flux développés en Tibco BW6. Développement des évolutions et correction d’anomalies en Tibco BW6.",
+          "duration": "12/2018 - 02/2019",
+          "duration_in_months": 2
+        }
+      ],
+      "indexed_date": "2025-02-21T19:50:53.768Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL (1).docx",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL (1).docx",
+      "phone_number": "0669796223",
+      "email": "labhalmehdi@gmail.com",
+      "skills": [
+        "Gestion de projet",
+        "Analyse des besoins",
+        "Planification & Suivi Projet",
+        "Recette",
+        "Agile Scrum",
+        "Modélisation des processus",
+        "Conduite de changement"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "Jira",
+        "MS Project",
+        "Excel",
+        "Sciforma",
+        "MEGA",
+        "Linux",
+        "MySQL",
+        "Python",
+        "Java",
+        "HTML/CSS"
+      ],
+      "experience_years": 6,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique – INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP – Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum – SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS",
+          "description": "Analyse des besoins métiers, gestion du backlog, livraison du produit dans les délais, estimation du plan de charge, recette de la solution, élaboration de la Roadmap, rédaction des guides utilisateurs.",
+          "duration": "06/2023 - 02/2025",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Chef de produit OUTILS IT",
+          "company": "SII SERVICES Maroc : Client “Bouygues Telecom France”",
+          "description": "Analyse des besoins métiers, maintenance évolutive et corrective des outils existants, gestion du backlog, animation des ateliers métiers, priorisation des besoins, reporting PMO, recette de la solution, modélisation des process, rédaction des guides utilisateurs.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Chef de produit CORPORATE",
+          "company": "SII SERVICES Maroc : Client “CREDIT DU MAROC”",
+          "description": "Analyse et cadrage du besoin métier, rédaction des User Stories, Epic, Feature et Roadmap, animation des ateliers métiers, reporting PMO, recette de la solution, élaboration de la Roadmap, modélisation des process, priorisation des Macro Fonctionnalités.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Chef de projet Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, préparation des supports de réunion, établissement des procédures, rédaction des user-stories, recette sur Core Banking Amplitude, collaboration avec l'équipe Dev, animation d'ateliers, définition des OKR, participation aux séances de Démo.",
+          "duration": "02/2022 - 11/2022",
+          "duration_in_months": 9
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablir la définition fonctionnelle du projet, rédaction des spécifications, conception des besoins fonctionnels, animation des ateliers, suivi des développements, rédaction des cahiers de recette, mise en production des projets, pilotage du projet, conduite du changement, modélisation des processus.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, préparation de l’environnement de DEV.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        }
+      ],
+      "indexed_date": "2025-02-21T19:59:19.434Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL-03022025.docx",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL-03022025.docx",
+      "phone_number": "",
+      "email": "",
+      "skills": [
+        "Gestion de Projet",
+        "Analyse des besoins",
+        "Spécification fonctionnelle et technique",
+        "Recette",
+        "Conduite du changement",
+        "Agile Scrum",
+        "Modélisation des processus"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "JIRA",
+        "MS Project",
+        "Excel",
+        "Sciforma",
+        "MEGA"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique – INPT Rabat",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS (Theodo Group)",
+          "description": "Analyse des besoins métiers, rédaction des spécifications fonctionnelles et techniques, gestion du Backlog, animation des rituels agiles, livraison du produit dans les délais, estimation du Plan de charge, recette de la solution, élaboration de la Roadmap, rédaction des guides utilisateurs.",
+          "duration": "06/2024 - 02/2025",
+          "duration_in_months": 8
+        },
+        {
+          "title": "Product Owner OUTILS IT",
+          "company": "SII SERVICES Maroc : Client “Bouygues Telecom France”",
+          "description": "Analyse des besoins métiers, maintenance évolutive et corrective des outils existants, gestion du Backlog, animation des ateliers métiers, priorisation des besoins, reporting PMO, recette de la solution, élaboration de la Roadmap, modélisation des processus, alimentation du contenu de l’avancement des chantiers.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Product Owner CORPORATE",
+          "company": "SII SERVICES Maroc : Client “CREDIT DU MAROC”",
+          "description": "Analyse et cadrage du besoin métier, rédaction des User Stories, Epic, Feature et Roadmap, animation des ateliers métiers, priorisation des Macro Fonctionnalités, reporting PMO, recette de la solution, élaboration de la ROADMAP projet, modélisation des process Cash Management.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Chef de projet Retail Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, préparation des supports de réunion, rédaction des PVs, établissement des procédures, rédaction des user-stories, recette sur Core Banking Amplitude, collaboration avec l’équipe Dev, définition des OKR, participation aux séances de Démo, initiation des instances Agile.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablir la définition fonctionnelle du projet, rédaction des spécifications fonctionnelles et techniques, animation des ateliers métiers, suivi des développements, rédaction des cahiers de recette, mise en production des projets, pilotage du projet, conduite du changement, modélisation des processus, gestion d’appel d’offre.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, préparation de l’environnement de DEV.",
+          "duration": "Date inconnue - Date inconnue",
+          "duration_in_months": 0
+        }
+      ],
+      "indexed_date": "2025-02-21T19:59:20.915Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL 25052024.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL 25052024.pdf",
+      "phone_number": "06 69 79 62 23",
+      "email": "labhalmehdi@gmail.com",
+      "skills": [
+        "Gestion de Projet",
+        "Modélisation des processus",
+        "Recette",
+        "Conduite du changement",
+        "Priorisation",
+        "Reporting",
+        "Analyse des besoins métiers",
+        "Rédaction des User Stories",
+        "Animation d'ateliers",
+        "Elaboration de Roadmap",
+        "Priorisation des besoins",
+        "Modélisation des processus avec BPMN",
+        "Extraction des reporting sous Jira"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "JIRA",
+        "MS Project",
+        "Sciforma",
+        "MEGA",
+        "Linux",
+        "MySQL",
+        "Python",
+        "Java",
+        "HTML/CSS",
+        "UML",
+        "BPMN",
+        "REST/SOAP API"
+      ],
+      "experience_years": 8,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique – INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP – Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum – SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Chef de produit OUTILS IT",
+          "company": "SII SERVICES Maroc",
+          "description": "Analyse des besoins métiers, Maintenance évolutive et corrective des outils existants, Rédaction des User Stories, Priorisation des besoins, Reporting PMO, Recette de la solution, Modélisation des process avec BPMN.",
+          "duration": "04/2014 - 02/2025",
+          "duration_in_months": 130
+        },
+        {
+          "title": "Chef de produit CORPORATE",
+          "company": "SII SERVICES Maroc",
+          "description": "Analyse et cadrage du besoin métier, Rédaction des User Stories, Animation des séances de brainstorming, Reporting PMO, Recette de la solution, Modélisation des process Cash Management.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Chef de projet Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, Préparation des supports de réunion, Etablissement des procédures, Rédaction des user-stories, Recette sur Core Banking Amplitude, Collaboration avec l’équipe Dev, Animation d’atelier technique et stratégique.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablir la définition fonctionnelle du projet, Rédaction des spécifications, Animation des ateliers métiers, Suivi des développements, Recette fonctionnelle, Conduite du changement, Gestion d’appel d’offre.",
+          "duration": "02/2025 - Aujourd'hui",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, Préparation de l’environnement de DEV.",
+          "duration": "04/2013 - 04/2014",
+          "duration_in_months": 12
+        }
+      ],
+      "indexed_date": "2025-02-21T19:59:14.687Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL-08082024.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL-08082024.pdf",
+      "phone_number": "0669796223",
+      "email": "labhalmehdi@gmail.com",
+      "skills": [
+        "Gestion de Projet",
+        "Analyse des Besoins Métiers",
+        "Rédaction des User Stories",
+        "Gestion du Backlog",
+        "Recette des Solutions",
+        "Modélisation des Processus"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "JIRA",
+        "MS Project",
+        "Trello",
+        "Notions",
+        "Confluence",
+        "Postman"
+      ],
+      "experience_years": 6,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique - INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP - Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum - SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS",
+          "description": "Analyse des besoins métiers, Rédaction des User Stories, Priorisation des besoins, Livraison du produit, Recette de la solution, Elaboration de la Roadmap, Rédaction des guides utilisateurs.",
+          "duration": "04/2019 - 02/2023",
+          "duration_in_months": 46
+        },
+        {
+          "title": "Chef de produit OUTILS IT",
+          "company": "SII SERVICES Maroc (Client Bouygues Telecom France)",
+          "description": "Analyse des besoins métiers, Maintenance évolutive et corrective des outils, Priorisation des besoins, Reporting PMO, Recette de la solution, Modélisation des process.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Chef de produit CORPORATE",
+          "company": "SII SERVICES Maroc (Client CREDIT DU MAROC)",
+          "description": "Analyse et cadrage du besoin métier, Rédaction des User Stories, Animation des ateliers, Priorisation des Macro Fonctionnalités, Modélisation des process.",
+          "duration": "06/2023 - 02/2025",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Chef de projet Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, Etablissement des procédures, Rédaction des user-stories, Recette sur Core Banking Amplitude, Collaboration avec l'équipe Dev, Animation d'ateliers, Définition des OKR.",
+          "duration": "02/2025 - Aujourd'hui",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablir la définition fonctionnelle du projet, Rédaction des spécifications, Animation des ateliers métiers, Suivi des développements, Recette fonctionnelle, Conduite du changement.",
+          "duration": "02/2025 - Aujourd'hui",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, Préparation de l'environnement de DEV.",
+          "duration": "02/2025 - Aujourd'hui",
+          "duration_in_months": 0
+        }
+      ],
+      "indexed_date": "2025-02-21T19:59:15.660Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV LABHAL Mehdi (7).pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV LABHAL Mehdi (7).pdf",
+      "phone_number": "0669796223",
+      "email": "labhalmehdi@gmail.com",
+      "skills": [
+        "Gestion de projets",
+        "Agile Scrum",
+        "Cycle de vie des projets",
+        "Rédaction des process",
+        "Spécifications fonctionnelles & techniques",
+        "Gestion d'équipe",
+        "Test & Qualité",
+        "Reporting & Estimation des charges",
+        "Recette & Assistance MEP",
+        "Définition des Epics & Rédaction des US",
+        "Priorisation du Backlog",
+        "Etude de faisabilité technique",
+        "Planification & Suivi Projet",
+        "Animation des comités & rituels agiles",
+        "Développement Logiciel SDLC"
+      ],
+      "tools": [
+        "Camunda",
+        "SAP"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme ingénieur d'état en informatique",
+        "Certification SCRUM PO",
+        "Formation AMPLITUDE Core Banking"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "N/A",
+          "description": "Conception et livraison d'une plateforme de fidélité pour le client WINXO en approche 100% agile.",
+          "duration": "06/2024 - 12/2024",
+          "duration_in_months": 6
+        },
+        {
+          "title": "Product Owner",
+          "company": "N/A",
+          "description": "Accompagnement des clients CDM et BOUYGUES TELECOM sur la réalisation des roadmaps digitales et gestion du backlog.",
+          "duration": "11/2022 - 04/2024",
+          "duration_in_months": 17
+        },
+        {
+          "title": "Chef de projet Retail",
+          "company": "N/A",
+          "description": "Analyse et optimisation des process de gestion des réclamations client, conception d'une nouvelle solution fluide.",
+          "duration": "03/2021 - 09/2022",
+          "duration_in_months": 18
+        },
+        {
+          "title": "Chef de projet Web et Systèmes de Paiement",
+          "company": "N/A",
+          "description": "Responsable du suivi de plusieurs projets pour Orange, de la phase de cadrage à la mise en production.",
+          "duration": "08/2018 - 02/2021",
+          "duration_in_months": 30
+        },
+        {
+          "title": "Développeur Python",
+          "company": "N/A",
+          "description": "Développement de scripts et plugins en Python pour faciliter l'installation d'équipements télécoms.",
+          "duration": "02/2018 - 07/2018",
+          "duration_in_months": 5
+        }
+      ],
+      "indexed_date": "2025-02-21T19:59:14.605Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL-08082024.docx",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL-08082024.docx",
+      "phone_number": "",
+      "email": "",
+      "skills": [
+        "Gestion de Projet",
+        "Cycle V",
+        "Planification & Suivi Projet",
+        "Cadrage du besoin & Analyse des process",
+        "Spécification fonctionnelle & technique",
+        "Animation des ateliers",
+        "Modélisation et amélioration des process",
+        "Recette",
+        "Assistance MEP",
+        "Sauvegarde & Supervision",
+        "Formation & conduite de changement",
+        "Agile Scrum",
+        "Cadrage 360°",
+        "Animation des rituels agiles",
+        "Définition des Epics & Rédaction des US",
+        "Priorisation du Backlog",
+        "Definition of Done & Definition of Ready",
+        "Test & QA",
+        "Product Review avec les métiers"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "JIRA",
+        "MS Project",
+        "Excel",
+        "Sciforma",
+        "MEGA",
+        "Linux",
+        "MySQL",
+        "Python",
+        "Java",
+        "HTML/CSS"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique – INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP – Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING (Référentiel Client, Tiers, Produits bancaires, Engagement, Habilitations)",
+        "Formation Agile Scrum – SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS (Theodo Group)",
+          "description": "Analyse des besoins métiers, Rédaction des spécifications fonctionnelles et techniques, Rédaction des User Stories et gestion du Backlog, Animation des rituels agiles, Livraison du produit sous les délais et respect des engagements, Estimation du Plan de charge de l’équipe, Recette de la solution sur environnement UAT/Prod, Elaboration de la Roadmap avec le client, Rédaction des guides utilisateurs et PV de recette.",
+          "duration": "06/2024 - 12/2024",
+          "duration_in_months": 6
+        },
+        {
+          "title": "Product Owner OUTILS IT",
+          "company": "SII SERVICES Maroc : Client “Bouygues Telecom France”",
+          "description": "Analyse des besoins métiers, Maintenance évolutive et corrective des outils existants, Rédaction des User Stories et gestion du Backlog, Animation et Compte rendu des ateliers métiers, Priorisation des besoins sur la base du gain apporté, Reporting PMO de l’état d’avancement des chantiers, Recette de la solution sur environnement UAT/Prod, Elaboration de la Roadmap avec l’équipe développement, Modélisation des process avec les métiers sous format BPMN, Alimentation du contenu de l’avancement des chantiers sous confluence, Rédaction des guides utilisateurs.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Product Owner CORPORATE",
+          "company": "SII SERVICES Maroc : Client “CREDIT DU MAROC”",
+          "description": "Analyse et cadrage du besoin métier, Rédaction des User Stories, Epic, Feature et Roadmap, Animation et Compte rendu des ateliers métiers, Animation des séances de brainstorming (Métiers/UX/Développeurs), Reporting PMO de l’état d’avancement des chantiers, Recette de la solution, Elaboration de la ROADMAP projet E-Corporate, Modélisation des process Cash Management, Priorisation des Macro Fonctionnalités à inclure dans la solution E-Corpo.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Chef de projet Retail Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier et réalisation des process, Préparation des supports de réunion et rédaction des PVs, Etablissement des procédures et animation des CAB, Rédaction des user-stories et des actions out of build, Priorisation des Epic (& US) à traiter en MVP/R1/R2, Recette sur Core Banking Amplitude de la fiche client et gestion des habilitations, Collaboration avec l’équipe Dev pour compréhension des US, Animation d'atelier technique et stratégique de la banque, Définition des OKR avec le Sponsor du projet, Participation aux séances de Démo avec tous les métiers, Initiation des instances Agile au sein de la Squad, Extraction des reporting sous Jira.",
+          "duration": "Dates non précisées",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Etablir la définition fonctionnelle du projet et étude de faisabilité des besoins exprimés, Rédaction et la validation des spécifications fonctionnelles et techniques, La conception et le cadrage des besoins fonctionnels, Animation des ateliers métiers et réalisation des comptes rendu, La gestion de la relation avec les clients internes et externes, Suivi des développements de la solution IT avec l’éditeur/prestataire, Le suivi et réalisation et l’intégration des développements nécessaires, La rédaction des cahiers de recette, La réalisation de la recette fonctionnelle et des tests de non- régression, La mise en production des projets et leur suivi post MEP, Le pilotage du projet et rédaction des reportings, La conduite du changement : rédaction des guides utilisateurs, formation et assistance des utilisateurs, Modélisation des processus sous UML et BPMN, Gestion d’appel d'offre de nouvelle solution.",
+          "duration": "Dates non précisées",
+          "duration_in_months": 0
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, Préparation de l’environnement de DEV.",
+          "duration": "Dates non précisées",
+          "duration_in_months": 0
+        }
+      ],
+      "indexed_date": "2025-02-21T19:59:25.528Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "Product Owner for Morocco market.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "Product Owner for Morocco market.pdf",
+      "phone_number": "+212-763172619",
+      "email": "Intekhab.ahmad@live.com",
+      "skills": [
+        "Product Owner",
+        "Agile Scrum Methodologies",
+        "Generative AI Solutions",
+        "Call Center Technologies",
+        "Payment Solutions",
+        "Order to Cash Process"
+      ],
+      "tools": [
+        "Salesforce",
+        "Zendesk",
+        "Microsoft Dynamics",
+        "Genesys",
+        "Avaya",
+        "Cisco Unified Communications",
+        "Amazon Connect",
+        "Power BI",
+        "Tableau",
+        "Excel"
+      ],
+      "experience_years": 14,
+      "education": [
+        "BBA- 2005",
+        "E-MBA",
+        "Product Owner Business Analyst, Project Management"
+      ],
+      "languages": [
+        "English",
+        "Urdu",
+        "Arabic"
+      ],
+      "experiences": [
+        {
+          "title": "Product Owner",
+          "company": "Xebia",
+          "description": "Delivered impactful call center technologies and Generative AI solutions across industries.",
+          "duration": "11/2021 - 06/2024",
+          "duration_in_months": 31
+        },
+        {
+          "title": "Product Owner",
+          "company": "R System International",
+          "description": "Focused on delivering end-to-end payment solutions for banking and retail industries.",
+          "duration": "10/2018 - 10/2021",
+          "duration_in_months": 36
+        },
+        {
+          "title": "Product Manager",
+          "company": "Interglobe Technologies",
+          "description": "Managed product development for Indigo Airlines.",
+          "duration": "11/2016 - 09/2018",
+          "duration_in_months": 22
+        },
+        {
+          "title": "Associate Project Manager",
+          "company": "Abeam Consulting",
+          "description": "Worked on project management in Malaysia.",
+          "duration": "05/2014 - 12/2016",
+          "duration_in_months": 31
+        },
+        {
+          "title": "Project Coordinator - SAP ECC 6.0",
+          "company": "AL Rostamani Group",
+          "description": "Coordinated SAP projects in Dubai, UAE.",
+          "duration": "11/2007 - 12/2011",
+          "duration_in_months": 49
+        }
+      ],
+      "indexed_date": "2025-02-23T10:46:10.723Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Mehdi-LABHAL.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Mehdi-LABHAL.pdf",
+      "phone_number": "",
+      "email": "",
+      "skills": [
+        "Gestion de projet",
+        "Analyse des besoins métiers",
+        "Rédaction des spécifications",
+        "Animation d'ateliers",
+        "Modélisation des processus",
+        "Recette des solutions",
+        "Priorisation des besoins"
+      ],
+      "tools": [
+        "AMPLITUDE",
+        "JIRA",
+        "MS Project",
+        "Excel",
+        "Sciforma",
+        "MEGA",
+        "Trello",
+        "Notions",
+        "Confluence",
+        "Postman"
+      ],
+      "experience_years": 7,
+      "education": [
+        "Diplôme Ingénieur d’état en informatique – INPT Rabat",
+        "Fondamentaux de la gestion de projet sous PMP – Orange Maroc",
+        "Formation AMPLITUDE CORE BANKING",
+        "Formation Agile Scrum – SGMA"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Product and Delivery Consultant",
+          "company": "NIMBLEWAYS (Theodo Group)",
+          "description": "Analyse des besoins métiers, rédaction des spécifications, gestion du backlog, animation d'ateliers, livraison du produit, recette de la solution, élaboration de la roadmap.",
+          "duration": "11/2022 - 02/2023",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Product Owner OUTILS IT",
+          "company": "SII SERVICES Maroc (Client: Bouygues Telecom France)",
+          "description": "Analyse des besoins métiers, maintenance des outils existants, gestion du backlog, animation d'ateliers, reporting PMO, recette de la solution, modélisation des processus.",
+          "duration": "03/2023 - 04/2024",
+          "duration_in_months": 13
+        },
+        {
+          "title": "Product Owner CORPORATE",
+          "company": "SII SERVICES Maroc (Client: CREDIT DU MAROC)",
+          "description": "Analyse du besoin métier, rédaction des User Stories, animation des ateliers, reporting PMO, recette de la solution, priorisation des fonctionnalités.",
+          "duration": "06/2024 - 02/2025",
+          "duration_in_months": 8
+        },
+        {
+          "title": "Chef de projet Retail Confirmé",
+          "company": "SOCIETE GENERALE",
+          "description": "Analyse du besoin métier, recette sur Core Banking Amplitude, collaboration avec l'équipe Dev, animation d'ateliers techniques, définition des OKR.",
+          "duration": "02/2022 - 11/2022",
+          "duration_in_months": 9
+        },
+        {
+          "title": "Chef de projet Web & Système de paiement",
+          "company": "ORANGE Maroc",
+          "description": "Définition fonctionnelle du projet, rédaction des spécifications, suivi des développements, recette fonctionnelle, conduite du changement.",
+          "duration": "04/2020 - 02/2022",
+          "duration_in_months": 22
+        },
+        {
+          "title": "Développeur Python",
+          "company": "CIRCET MAROC",
+          "description": "Développement des scripts/applications en Python, préparation de l'environnement de DEV.",
+          "duration": "06/2019 - 04/2020",
+          "duration_in_months": 10
+        }
+      ],
+      "indexed_date": "2025-02-23T10:46:12.775Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV-Faiza-Chtita-23.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV-Faiza-Chtita-23.pdf",
+      "phone_number": "+212700728275",
+      "email": "Fayza.chtita@gmail.com",
+      "skills": [
+        "Business Intelligence",
+        "Data Analysis",
+        "Project Management",
+        "Agile Methodologies",
+        "ETL",
+        "Reporting",
+        "SQL"
+      ],
+      "tools": [
+        "QlikSense",
+        "Power BI",
+        "Microstrategy",
+        "DataStage",
+        "Jira",
+        "Excel"
+      ],
+      "experience_years": 3.8,
+      "education": [
+        "Diplômée Ingénieur d’Etat à L’Institut National de Statistique et d’Economie Appliquée (Filière Ingénierie de données et informatique décisionnelle – BI)",
+        "Formation certifiante en BIGDATA par IBM",
+        "Formation et Certification Scrum Foundation Professional (SFPC)",
+        "Formation Certifiante Power BI-DATACAMP"
+      ],
+      "languages": [],
+      "experiences": [
+        {
+          "title": "Chef de projet BI confirmé|Business Analyst",
+          "company": "SOCIETE GENERALE",
+          "description": "Agir en tant que liaison entre les équipes produit, métier et informatique pour comprendre la demande de nouvelles fonctionnalités et prioriser la feuille de route produit. Animation d'ateliers techniques et stratégiques au sein de la banque. Prise en charge de la gestion du backlog produit avec Jira. Répondre aux problèmes techniques et supprimer les obstacles avec des solutions innovantes. Homologation des projets post prod et analyse des écarts avec les métiers. Production de tableaux de bord sur Power BI et IBM Cognos Analytics. Conduite du changement: rédaction de guides utilisateurs, formation et assistance aux utilisateurs.",
+          "duration": "06/2020 - 02/2025",
+          "duration_in_months": 57
+        },
+        {
+          "title": "Data Analyst-Qlik Sense",
+          "company": "BANQUE CENTRALE POPULAIRE",
+          "description": "Rédaction des cahiers des charges. Cadrage et analyse des besoins fonctionnels et techniques. Accompagnement et suivi des développements (outil Qlik Sense). Réalisation des tests et recettes métiers. Pilotage du déploiement de la solution BI (Qlik Sense). Organisation et animation des ateliers avec les différentes parties prenantes. Création des tableaux de bord pour l’ensemble des entités internes. Pilotage du portefeuille RH (Budget, Planning, Risque, Qualité & FDR). Animation du processus de l’audit qualité selon la norme ISO 9001",
+          "duration": "10/2020 - 06/2022",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Consultante BI -Datastage|Power BI|Microstrategy",
+          "company": "CGI MAROC",
+          "description": "Cadrage et analyse des besoins fonctionnels et techniques. Développement des Flux ETL (DataStage). Gestion des tickets et incidents. Réalisation des tests et recettes techniques, packaging(Jenkins). Génération des tableaux de bord (Microstrategy|Power BI). Travail en agilité",
+          "duration": "02/2019 - 10/2020",
+          "duration_in_months": 20
+        },
+        {
+          "title": "Consultante BI -TIBCO",
+          "company": "CAPGEMINI",
+          "description": "Migration des flux développés en Tibco BW6. Développement des évolutions et correction d’anomalies en Tibco BW6",
+          "duration": "12/2018 - 02/2019",
+          "duration_in_months": 2
+        }
+      ],
+      "indexed_date": "2025-02-23T10:46:14.196Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "CV_Achraf_CHARCHAOUI.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "CV_Achraf_CHARCHAOUI.pdf",
+      "phone_number": "+212688513576",
+      "email": "achraf.charchaoui@etu.uae.ac.ma",
+      "skills": [
+        "JAVA",
+        "JEE",
+        "Python",
+        "C#",
+        "TypeScript",
+        "JavaScript",
+        "PHP",
+        "CSS",
+        "HTML",
+        "SQL",
+        "MySQL",
+        "MongoDB",
+        "FireBase",
+        "Spring Boot",
+        "Angular",
+        "Laravel",
+        "React",
+        "ASP.NET",
+        "Vue.js",
+        "J-Swing",
+        "J-FX",
+        "Hibernate",
+        "JUnit",
+        "Mockito"
+      ],
+      "tools": [
+        "Docker",
+        "Kubernetes",
+        "GitLab",
+        "Maven",
+        "Gradel"
+      ],
+      "experience_years": 1,
+      "education": [
+        "Licence en Sciences Mathématiques et Informatique - Université Abdelmalek Essaâdi",
+        "Master Spécialisé Qualité du Logiciel - Université Abdelmalek Essaâdi"
+      ],
+      "languages": [
+        "Arabe",
+        "Français",
+        "Allemand",
+        "Anglais",
+        "Espagnol"
+      ],
+      "experiences": [
+        {
+          "title": "Développeur Full Stack",
+          "company": "NTT DATA",
+          "description": "Conception et développement d'une solution web avec Spring Boot et Angular pour la gestion des formations, en intégrant des principes de design UX. Réalisation de tests unitaires. Méthodologie : Agile SCRUM, avec utilisation de JIRA pour la gestion des tâches.",
+          "duration": "07/2024 - 09/2024",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Développeur Web et IoT",
+          "company": "LEGIT ROBOTICS CENTER",
+          "description": "Développement d'une application web avec JEE liée à un système (IoT) de sécurité avancé intégrant radar et laser, ainsi que conception et réalisation de ce système.",
+          "duration": "04/2024 - 06/2024",
+          "duration_in_months": 2
+        },
+        {
+          "title": "Développeur Full Stack",
+          "company": "ISM Offshoring",
+          "description": "Conception et développement d'une application web pour la gestion des absences avec Laravel et React.js. Conteneurisation de l'application avec Docker. Mise en place d'un serveur Apache avec configuration de VirtualHost, Load Balancing, et d’un reverse proxy pour optimiser la gestion des requêtes.",
+          "duration": "07/2023 - 09/2023",
+          "duration_in_months": 3
+        }
+      ],
+      "indexed_date": "2025-02-23T10:46:15.352Z"
+    }
+  },
+  {
+    "_index": "cvs",
+    "_id": "1740307869956-CV_Achraf_CHARCHAOUI.pdf",
+    "_score": 1,
+    "_source": {
+      "fileName": "1740307869956-CV_Achraf_CHARCHAOUI.pdf",
+      "phone_number": "+212688513576",
+      "email": "achraf.charchaoui@etu.uae.ac.ma",
+      "skills": [
+        "JAVA",
+        "JEE",
+        "Python",
+        "C#",
+        "C",
+        "TypeScript",
+        "JavaScript",
+        "PHP",
+        "CSS",
+        "HTML",
+        "SQL",
+        "MySQL",
+        "MongoDB",
+        "FireBase",
+        "Spring Boot",
+        "Angular",
+        "Laravel",
+        "React",
+        "ASP.NET",
+        "Vue.js",
+        "J-Swing",
+        "J-FX",
+        "Hibernate",
+        "JUnit",
+        "Mockito"
+      ],
+      "tools": [
+        "Linux",
+        "Windows",
+        "Docker",
+        "Kubernetes",
+        "GitLab",
+        "Maven",
+        "Gradel"
+      ],
+      "experience_years": 1,
+      "education": [
+        "Licence en Sciences Mathématiques et Informatique - Université Abdelmalek Essaâdi",
+        "Master Spécialisé Qualité du Logiciel - Université Abdelmalek Essaâdi"
+      ],
+      "languages": [
+        "Arabe",
+        "Français",
+        "Allemand",
+        "Anglais",
+        "Espagnol"
+      ],
+      "experiences": [
+        {
+          "title": "Développeur Full Stack",
+          "company": "NTT DATA",
+          "description": "Conception et développement d'une solution web avec Spring Boot et Angular pour la gestion des formations, en intégrant des principes de design UX. Réalisation de tests unitaires. Méthodologie : Agile SCRUM, avec utilisation de JIRA pour la gestion des tâches.",
+          "duration": "07/2024 - 09/2024",
+          "duration_in_months": 3
+        },
+        {
+          "title": "Développeur Web et IoT",
+          "company": "LEGIT ROBOTICS CENTER",
+          "description": "Développement d'une application web avec JEE liée à un système (IoT) de sécurité avancé intégrant radar et laser, ainsi que conception et réalisation de ce système.",
+          "duration": "04/2024 - 06/2024",
+          "duration_in_months": 2
+        },
+        {
+          "title": "Développeur Full Stack",
+          "company": "ISM Offshoring",
+          "description": "Conception et développement d'une application web pour la gestion des absences avec Laravel et React.js. Conteneurisation de l'application avec Docker. Mise en place d'un serveur Apache avec configuration de VirtualHost, Load Balancing, et d’un reverse proxy pour optimiser la gestion des requêtes.",
+          "duration": "07/2023 - 09/2023",
+          "duration_in_months": 3
+        }
+      ],
+      "indexed_date": "2025-02-23T10:51:20.614Z"
+    }
+  }
+]

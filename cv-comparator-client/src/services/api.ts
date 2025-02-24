@@ -105,6 +105,9 @@ export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
  * Fonction utilitaire pour les requêtes fetch authentifiées
  */
 export const fetchAuthApi = async (endpoint: string, options: RequestInit = {}) => {
+  console.log('Endpoint reçu:', endpoint);
+  console.log('URL complète:', buildApiUrl(endpoint));
+  console.log('Options:', getAuthenticatedRequestOptions(options));
   return fetchApi(endpoint, getAuthenticatedRequestOptions(options));
 };
 

@@ -15,8 +15,11 @@ const formatExtractionResult = (extraction, fileName) => {
     name: cleanFileName(fileName),
     status: 'completed',
     summary:extraction.summary || "",
+    phone_number: extraction.phone_number || "",
+    email: extraction.email || "",
     skills: extraction.skills || [],
     tools: extraction.tools || [],
+    tool_match_score: extraction.tool_match_score || 0,
     experience_years: extraction.experience_years || 0,
     education: extraction.education || [],
     languages: extraction.languages || [],
@@ -29,36 +32,34 @@ const formatExtractionResult = (extraction, fileName) => {
 
 class CVController {
 
-  async compareCV(req, res) {
-    try {
-      console.log('Début de la comparaison des CVs');
-      
-      // Récupération et normalisation des requirements
-      let requirements = req.body.requirements ? JSON.parse(req.body.requirements) : {};
-      
-      // Normalisation des champs après la récupération
-      if (requirements && typeof requirements === 'object') {
-        requirements = {
-          description: requirements.description || '',
-          // Diviser la chaîne en tableau et nettoyer chaque élément
-          skills: Array.isArray(requirements.skills) 
-            ? requirements.skills 
-            : requirements.skills?.split(',').map(s => s.trim()) || [],
-          // Diviser la chaîne en tableau et nettoyer chaque élément
-          tools: Array.isArray(requirements.tools)
-            ? requirements.tools
-            : requirements.tools?.split(',').map(t => t.trim()) || [],
-          experience_years: Number(requirements.experience_years) || 0,
-          education: Array.isArray(requirements.education) ? requirements.education : [],
-          languages: Array.isArray(requirements.languages) ? requirements.languages : []
-        };
-      }
-  
-      console.log('Requirements normalisés:', requirements);
-
-      const files = req.files;
-      const errors = [];
+    async compareCV(req, res) {
+      try {
+        console.log('Début de la comparaison des CVs');
         
+        // Récupération et normalisation des requirements
+        let requirements = req.body.requirements ? JSON.parse(req.body.requirements) : {};
+        
+        // Normalisation des champs après la récupération
+        if (requirements && typeof requirements === 'object') {
+          requirements = {
+            description: requirements.description || '',
+            skills: Array.isArray(requirements.skills) 
+              ? requirements.skills 
+              : requirements.skills?.split(',').map(s => s.trim()) || [],
+            tools: Array.isArray(requirements.tools)
+              ? requirements.tools
+              : requirements.tools?.split(',').map(t => t.trim()) || [],
+            experience_years: Number(requirements.experience_years) || 0,
+            education: Array.isArray(requirements.education) ? requirements.education : [],
+            languages: Array.isArray(requirements.languages) ? requirements.languages : []
+          };
+        }
+    
+        console.log('Requirements normalisés:', requirements);
+  
+        const files = req.files;
+        const errors = [];
+          
         if (!files || files.length < 2) {
           return res.status(400).json({ 
             error: 'Au moins deux fichiers sont requis',
@@ -75,32 +76,24 @@ class CVController {
             const filePath = file.path;
             const text = await cvService.extractText(filePath);
             
-            // Utiliser directement analyzeWithGPT avec les requirements
+            // Analyser le CV avec GPT
             const extraction = await cvService.analyzeWithGPT(text, requirements, file.originalname);
             const candidateData = formatExtractionResult(extraction, file.originalname);
             
             // Calculer les scores en utilisant la fonction du service
             if (candidateData) {
               const scores = cvService.calculateManualScore(candidateData, requirements);
+              
+              // Assigner tous les scores pertinents au candidat
               Object.assign(candidateData, {
-                similarity_score: scores.totalScore,
+                totalScore: scores.totalScore,
                 skill_match_percent: scores.skillMatchPercent,
+                tool_match_percent: scores.toolMatchPercent,
+                tools_score: scores.toolsScore,
                 description_match_score: scores.description_match_score,
                 matching_skills: scores.matchingSkills,
                 matching_tools: scores.matchingTools
               });
-              // Ajout des logs détaillés ici
-              console.log(`[COMPARE] Résultats détaillés pour ${file.originalname}:`, {
-                similarity_score: scores.totalScore,
-                skills_requis: requirements.skills?.length || 0,
-                skills_trouvés: scores.matchingSkills.length,
-                skills_correspondants: scores.matchingSkills,
-                tools_requis: requirements.tools?.length || 0,
-                tools_trouvés: scores.matchingTools.length,
-                tools_correspondants: scores.matchingTools,
-                skill_match_percent: scores.skillMatchPercent,
-                description_match_score: scores.description_match_score
-                });
             }
             
             // Nettoyage asynchrone du fichier
@@ -131,8 +124,12 @@ class CVController {
           });
         }
   
-        // Tri des résultats par score
-        results.sort((a, b) => (b.similarity_score || 0) - (a.similarity_score || 0));
+        // Tri des résultats par totalScore
+        results.sort((a, b) => {
+          const scoreA = a.totalScore ?? 0;
+          const scoreB = b.totalScore ?? 0;
+          return scoreB - scoreA;
+        });
         
         const response = {
           rankings: results,
@@ -152,50 +149,72 @@ class CVController {
     }
   
   async searchCV(req, res) {
-      try {
-        // Récupération et normalisation des requirements
-        let requirements = req.body.requirements;
-        
-        // Normalisation des champs
-        if (requirements && typeof requirements === 'object') {
-          requirements = {
-            description: requirements.description || '',
-            skills: Array.isArray(requirements.skills) ? requirements.skills : [],
-            tools: Array.isArray(requirements.tools) ? requirements.tools : [],
-            experience_years: Number(requirements.experience_years) || 0,
-            education: Array.isArray(requirements.education) ? requirements.education : [],
-            languages: Array.isArray(requirements.languages) ? requirements.languages : []
-          };
-        }
-        
-        console.log('Requirements reçus:', requirements);
-  
-        const { rankings } = await cvService.searchCVs(requirements);
-          
-          console.log(`Nombre de résultats trouvés: ${rankings?.length || 0}`);
-          
-          // Log des scores pertinents
-          const scores = rankings.map(r => ({
-              name: r.fileName,
-              similarity_score: r.similarity_score,
-              skill_match_percent: r.skill_match_percent,
-              description_match_score: r.description_match_score,
-              elasticsearch_score: r.elasticsearch_score
-          }));
-          console.log('Scores des résultats:', scores);
-  
-          res.json({ rankings });
-          
-          console.log('Recherche terminée avec succès');
-          
-      } catch (error) {
-          console.error('Erreur détaillée lors de la recherche:', error);
-          res.status(500).json({ 
-              error: 'Erreur lors de la recherche des CVs',
-              details: error.message
-          });
-      }
+  try {
+    // Récupération et normalisation des requirements
+    let requirements = req.body.requirements;
+    
+    // Normalisation des champs
+    if (requirements && typeof requirements === 'object') {
+      requirements = {
+        description: requirements.description || '',
+        skills: Array.isArray(requirements.skills) ? requirements.skills : [],
+        tools: Array.isArray(requirements.tools) ? requirements.tools : [],
+        experience_years: Number(requirements.experience_years) || 0,
+        education: Array.isArray(requirements.education) ? requirements.education : [],
+        languages: Array.isArray(requirements.languages) ? requirements.languages : []
+      };
     }
+    
+    console.log('Requirements reçus:', requirements);
+
+    const { rankings: initialRankings } = await cvService.searchCVs(requirements);
+    
+    // Recalculer les scores manuels pour chaque CV
+    const rankings = initialRankings.map(cv => {
+      const scores = cvService.calculateManualScore(cv, requirements);
+      return {
+        ...cv,
+        totalScore: scores.totalScore,
+        skill_match_percent: scores.skillMatchPercent,
+        tool_match_percent: scores.toolMatchPercent,
+        tools_score: scores.toolsScore,
+        description_match_score: scores.description_match_score,
+        matching_skills: scores.matchingSkills,
+        matching_tools: scores.matchingTools
+      };
+    });
+
+    // Tri par totalScore comme dans compareCV
+    rankings.sort((a, b) => {
+      const scoreA = a.totalScore ?? 0;
+      const scoreB = b.totalScore ?? 0;
+      return scoreB - scoreA;
+    });
+      
+    console.log(`Nombre de résultats trouvés: ${rankings?.length || 0}`);
+      
+    // Log des scores pertinents avec totalScore
+    const scores = rankings.map(r => ({
+      name: r.fileName,
+      totalScore: r.totalScore,
+      skill_match_percent: r.skill_match_percent,
+      description_match_score: r.description_match_score,
+      elasticsearch_score: r.elasticsearch_score
+    }));
+    console.log('Scores des résultats:', scores);
+
+    res.json({ rankings });
+      
+    console.log('Recherche terminée avec succès');
+      
+  } catch (error) {
+    console.error('Erreur détaillée lors de la recherche:', error);
+    res.status(500).json({ 
+      error: 'Erreur lors de la recherche des CVs',
+      details: error.message
+    });
+  }
+}
   async getStatus(req, res) {
     const { jobId } = req.params;
     try {
