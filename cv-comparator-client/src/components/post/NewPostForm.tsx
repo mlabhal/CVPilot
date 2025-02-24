@@ -1,7 +1,7 @@
 // components/NewPostForm.tsx
 import React, { useState } from 'react';
 import { XCircle } from 'lucide-react';
-import { User } from '../types/index';
+import { User } from '../../types/index';
 
 interface NewPostFormProps {
   channelId: string;

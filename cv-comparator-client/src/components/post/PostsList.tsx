@@ -1,7 +1,7 @@
 // components/PostsList.tsx
 import React from 'react';
 import PostCard from './PostCard';
-import { Post } from '../types';
+import { Post } from '../../types';
 
 interface PostsListProps {
   posts: Post[];

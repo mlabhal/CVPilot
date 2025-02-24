@@ -62,14 +62,6 @@ const QuizViewer: React.FC<QuizViewerProps> = ({
       if (!token) {
         throw new Error('Veuillez vous connecter pour générer un quiz');
       }
-      const result = await fetchAuthApi(`/quiz/${quiz._id}/send`, {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          message,
-        }),
-      });
-
       setEmailSent(true);
       setTimeout(() => {
         setEmailModalOpen(false);

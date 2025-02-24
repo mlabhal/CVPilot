@@ -1,6 +1,6 @@
 // components/ChannelsList.tsx
 import React from 'react';
-import { Channel } from '../types';
+import { Channel } from '../../types';
 
 interface ChannelsListProps {
   channels: Channel[];
