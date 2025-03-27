@@ -154,6 +154,17 @@ const QuizSchema = new mongoose.Schema({
     type: Number, // en minutes
     default: 60
   },
+  recruiter: {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    }
+  },
   passingScore: {
     type: Number,
     default: 70

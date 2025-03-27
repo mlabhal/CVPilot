@@ -4,8 +4,9 @@ export interface User {
   name: string;
   email: string;
   avatar?: string;
+  type: 'candidat' | 'recruteur';
+  companyName?:string;
 }
-
 // Types pour les canaux
 export interface Channel {
   _id: string;
@@ -100,6 +101,8 @@ export interface ApiResponse {
 
 export interface CVResultsPageProps {
   apiResponse: ApiResponse;
+  isFromSearch?: boolean;
+  resetForm?: () => void;
 }
 
 

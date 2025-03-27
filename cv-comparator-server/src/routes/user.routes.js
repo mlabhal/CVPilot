@@ -1,7 +1,11 @@
 const router = require('express').Router();
-const { register } = require('../controllers/user.controller');
-const { getAllUsers } = require('../controllers/user.controller');
-const { login } = require('../controllers/user.controller');
+const { 
+  register, 
+  getAllUsers, 
+  login, 
+  forgotPasswordHandler, 
+  resetPasswordHandler 
+} = require('../controllers/user.controller');
 const auth = require('../middleware/auth');
 const User = require('../models/user.model');
 
@@ -18,5 +22,8 @@ router.get('/me', auth, async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
+// Nouvelles routes pour la réinitialisation du mot de passe
+router.post('/forgot-password', forgotPasswordHandler);
+router.post('/reset-password', resetPasswordHandler);
 
 module.exports = router;

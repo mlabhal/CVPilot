@@ -9,7 +9,7 @@ export const API_BASE_URL = `${API_URL}/api`;
 interface ApiInstance extends AxiosInstance {
   auth: {
     login: (data: { email: string; password: string }) => Promise<any>;
-    register: (data: { email: string; password: string; name: string }) => Promise<any>;
+    register: (data: { email: string; password: string; name: string; type: string ;companyName?:string }) => Promise<any>;
   }
 }
 
@@ -78,6 +78,9 @@ export const buildApiUrl = (endpoint: string): string => {
  */
 export const getAuthenticatedRequestOptions = (options: RequestInit = {}): RequestInit => {
   const token = localStorage.getItem('token');
+
+  // Afficher le token pour déboguer
+  console.log("Token utilisé dans la requête:", token);
   return {
     ...options,
     headers: {
@@ -108,6 +111,26 @@ export const fetchAuthApi = async (endpoint: string, options: RequestInit = {}) 
   console.log('Endpoint reçu:', endpoint);
   console.log('URL complète:', buildApiUrl(endpoint));
   console.log('Options:', getAuthenticatedRequestOptions(options));
+  
+  // Vérifier si l'utilisateur vient de s'inscrire et si l'endpoint est /users/me
+  const justRegistered = localStorage.getItem('justRegistered') === 'true';
+  if (justRegistered && endpoint === '/users/me') {
+    console.log("Utilisateur récemment inscrit, retour des données locales");
+    
+    // Récupérer le nom d'utilisateur stocké dans localStorage
+    const storedUserName = localStorage.getItem('userName');
+    
+    if (storedUserName) {
+      // Simuler une réponse réussie
+      return Promise.resolve({
+        name: storedUserName,
+        email: localStorage.getItem('userEmail') || '',
+        id: 'temp-id'
+      });
+    }
+  }
+  
+  // Si ce n'est pas le cas, procéder normalement
   return fetchApi(endpoint, getAuthenticatedRequestOptions(options));
 };
 

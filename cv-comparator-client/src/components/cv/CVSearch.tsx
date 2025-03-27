@@ -72,13 +72,14 @@ const CVSearch: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-transparent pt-0">
       <div className="container mx-auto">
         {!results ? (
           <div className="p-8">
-            <h1 className="text-3xl font-bold text-gray-600 mb-8">Recherche dans les CVs</h1>
+            <h1 className="text-3xl font-bold text-white mb-8">Recherche dans les CVs</h1>
             
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 border-2 border-indigo-100">
+            <form onSubmit={handleSubmit} className="rounded-lg shadow-xl p-6 border-0 backdrop-blur-sm"
+              style={{ backgroundColor: 'rgba(249, 250, 251, 0.5)' }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="description">
@@ -188,24 +189,14 @@ const CVSearch: React.FC = () => {
           </div>
         ) : (
           <div>
-            <div className="bg-white shadow-sm border-b">
-              <div className="container mx-auto px-4 py-4">
-                <div className="flex justify-between items-center">
-                  <h1 className="text-xl font-semibold">Résultats de la Recherche</h1>
-                  <button
-                    onClick={resetForm}
-                    className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                  >
-                    Nouvelle Recherche
-                  </button>
-                </div>
-              </div>
-            </div>
-  
-            <CVResultsPage apiResponse={results} />
+            <CVResultsPage 
+              apiResponse={results} 
+              isFromSearch={true}
+              resetForm={resetForm}
+            />
           </div>
         )}
-      </div>
+      </div> 
     </div>
   );
 };

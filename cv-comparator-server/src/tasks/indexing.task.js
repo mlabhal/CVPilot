@@ -1,6 +1,6 @@
 // tasks/indexing.task.js
 const cron = require('node-cron');
-const CVCache = require('../models/CVCache');
+const CVCache = require('../models/cv.cache.model');
 const cvService = require('../services/cv.service');
 
 // Exécuter chaque nuit à 2h du matin

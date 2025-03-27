@@ -9,9 +9,12 @@ const SyncService = require('./services/sync.service');
 const { removeDuplicateFiles, initAllCronJobs } = require('./utils/cron.utils');
 const fs = require('fs').promises;
 const path = require('path');
-
+const bodyParser = require('body-parser');
 const app = express();
 
+// Importation du middleware d'upload et du contrôleur vidéo
+const { uploadVideo } = require('./middleware/upload.middleware');
+const recordingController = require('./controllers/recordingController');
 
 // CORS configuration
 app.use(cors({
@@ -22,7 +25,19 @@ app.use(cors({
   maxAge: 86400
 }));
 
-// Middleware avec limites augmentées
+// Debug middleware - placé tôt pour voir toutes les requêtes
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
+// IMPORTANT: Route directe pour l'upload vidéo - AVANT body-parser
+app.post('/api/quiz/recordings/cloud-upload', 
+  uploadVideo.single('video'), 
+  recordingController.uploadToCloud
+);
+
+// Middleware avec limites augmentées - Utilisez soit express.json soit bodyParser, mais pas les deux
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
@@ -32,12 +47,14 @@ const postRoutes = require('./routes/post.routes');
 const userRoutes = require('./routes/user.routes');
 const cvRoutes = require('./routes/cv.routes');
 const quizRoutes = require('./routes/personalizedQuizRoutes');
+const questionBankRoutes = require('./routes/questionBankRoutes');
 
 app.use('/api/channels', channelRoutes);
 app.use('/api/channels', postRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cv', cvRoutes);
 app.use('/api/quiz', quizRoutes);
+app.use('/api/question-bank', questionBankRoutes);
 
 // Servir les fichiers statiques de React en production
 if (process.env.NODE_ENV === 'production') {
@@ -55,14 +72,23 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
 }
-
-// Debug middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`, {
-    body: req.body,
-    query: req.query,
-    files: req.files
+// Route ping pour tester la connexion depuis la page de test
+app.get('/api/test-ping', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'API accessible', 
+    time: new Date().toISOString() 
   });
+});
+
+// Logging middleware plus détaillé APRÈS les routes principales
+app.use((req, res, next) => {
+  if (req.path.includes('/recordings/')) {
+    console.log(`DETAILED LOG - ${req.method} ${req.path}`, {
+      query: req.query,
+      files: req.files || (req.file ? [req.file] : null)
+    });
+  }
   next();
 });
 

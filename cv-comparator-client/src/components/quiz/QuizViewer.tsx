@@ -2,7 +2,7 @@ import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
 import { Button } from '../ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { AlertCircle, Mail, Download, Eye, CheckCircle } from 'lucide-react';
+import { AlertCircle, Mail, Download, Eye, CheckCircle, LinkIcon } from 'lucide-react';
 import { Alert, AlertDescription } from '../ui/alert';
 import { Badge } from '../ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
@@ -24,7 +24,8 @@ const QuizViewer: React.FC<QuizViewerProps> = ({
   const [sendingEmail, setSendingEmail] = useState<boolean>(false);
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  
+  const [linkCopied, setLinkCopied] = useState<boolean>(false);
+
   // Vérifier si le quiz existe et a la structure attendue
   if (!quiz || !quiz.sections || quiz.sections.length === 0) {
     return (
@@ -73,7 +74,27 @@ const QuizViewer: React.FC<QuizViewerProps> = ({
       setSendingEmail(false);
     }
   };
-  
+  // Fonction pour obtenir et copier le lien du quiz candidat
+  const handleGetCandidateLink = () => {
+    try {
+      // Créer le lien vers la version candidat du quiz
+      const candidateLink = `${window.location.origin}/quiz/${quiz._id}/candidate`;
+      
+      // Copier le lien dans le presse-papier
+      navigator.clipboard.writeText(candidateLink)
+        .then(() => {
+          // Indiquer que le lien a été copié
+          setLinkCopied(true);
+          setTimeout(() => setLinkCopied(false), 2000);
+        })
+        .catch(err => {
+          console.error('Erreur lors de la copie du lien:', err);
+          setError('Impossible de copier le lien. Veuillez essayer à nouveau.');
+        });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+    }
+  };
   // Fonction pour télécharger le quiz au format PDF
   const handleDownloadPDF = async () => {
     try {
@@ -187,6 +208,15 @@ const QuizViewer: React.FC<QuizViewerProps> = ({
                 >
                   <Download className="mr-2 h-4 w-4" />
                   PDF
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={handleGetCandidateLink}
+                  className={linkCopied ? 'bg-green-100 text-green-800 border-green-300' : ''}
+                >
+                  <LinkIcon className="mr-2 h-4 w-4" />
+                  {linkCopied ? 'Lien copié !' : 'Copier lien candidat'}
                 </Button>
                 <Button 
                   variant="default" 

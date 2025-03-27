@@ -1,6 +1,6 @@
 // workers/cv.worker.js
 const cvAnalysisQueue = require('../config/queue');
-const CVCache = require('../models/CVCache');
+const CVCache = require('../models/cv.cache.model');
 const cvService = require('../services/cv.service');
 
 cvAnalysisQueue.process(async (job) => {

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Arrière-plan -->
+  <rect width="800" height="500" fill="#f9faff" />
+  
+  <!-- Motif de fond -->
+  <pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse">
+    <rect width="20" height="20" fill="#f9faff" />
+    <circle cx="10" cy="10" r="1" fill="#6366F1" opacity="0.2" />
+  </pattern>
+  <rect width="800" height="500" fill="url(#grid2)" />
+  
+  <!-- Éléments décoratifs -->
+  <circle cx="650" cy="400" r="250" fill="#818CF8" opacity="0.05" />
+  <circle cx="150" cy="150" r="200" fill="#6366F1" opacity="0.05" />
+  
+  <!-- Diagramme radar des compétences -->
+  <g transform="translate(400, 250)">
+    <!-- Grille radar -->
+    <path d="M0,-180 L156,-90 L156,90 L0,180 L-156,90 L-156,-90 Z" stroke="#e5e7eb" stroke-width="1" fill="none" />
+    <path d="M0,-120 L104,-60 L104,60 L0,120 L-104,60 L-104,-60 Z" stroke="#e5e7eb" stroke-width="1" fill="none" />
+    <path d="M0,-60 L52,-30 L52,30 L0,60 L-52,30 L-52,-30 Z" stroke="#e5e7eb" stroke-width="1" fill="none" />
+    
+    <!-- Axes -->
+    <line x1="0" y1="0" x2="0" y2="-180" stroke="#e5e7eb" stroke-width="1" />
+    <line x1="0" y1="0" x2="156" y2="-90" stroke="#e5e7eb" stroke-width="1" />
+    <line x1="0" y1="0" x2="156" y2="90" stroke="#e5e7eb" stroke-width="1" />
+    <line x1="0" y1="0" x2="0" y2="180" stroke="#e5e7eb" stroke-width="1" />
+    <line x1="0" y1="0" x2="-156" y2="90" stroke="#e5e7eb" stroke-width="1" />
+    <line x1="0" y1="0" x2="-156" y2="-90" stroke="#e5e7eb" stroke-width="1" />
+    
+    <!-- Données pour candidat 1 -->
+    <path d="M0,-150 L130,-75 L130,75 L0,120 L-130,75 L-100,-58 Z" fill="#6366F1" fill-opacity="0.2" stroke="#6366F1" stroke-width="3" />
+    <circle cx="0" cy="-150" r="6" fill="#6366F1" />
+    <circle cx="130" cy="-75" r="6" fill="#6366F1" />
+    <circle cx="130" cy="75" r="6" fill="#6366F1" />
+    <circle cx="0" cy="120" r="6" fill="#6366F1" />
+    <circle cx="-130" cy="75" r="6" fill="#6366F1" />
+    <circle cx="-100" cy="-58" r="6" fill="#6366F1" />
+    
+    <!-- Données pour candidat 2 -->
+    <path d="M0,-110 L80,-46 L120,69 L0,90 L-90,52 L-120,-69 Z" fill="#F59E0B" fill-opacity="0.2" stroke="#F59E0B" stroke-width="3" />
+    <circle cx="0" cy="-110" r="6" fill="#F59E0B" />
+    <circle cx="80" cy="-46" r="6" fill="#F59E0B" />
+    <circle cx="120" cy="69" r="6" fill="#F59E0B" />
+    <circle cx="0" cy="90" r="6" fill="#F59E0B" />
+    <circle cx="-90" cy="52" r="6" fill="#F59E0B" />
+    <circle cx="-120" cy="-69" r="6" fill="#F59E0B" />
+    
+    <!-- Légendes des axes -->
+    <text x="0" y="-190" font-family="Arial, sans-serif" font-size="14" fill="#4B5563" text-anchor="middle">Programmation</text>
+    <text x="170" y="-90" font-family="Arial, sans-serif" font-size="14" fill="#4B5563" text-anchor="start">Communication</text>
+    <text x="170" y="90" font-family="Arial, sans-serif" font-size="14" fill="#4B5563" text-anchor="start">Design</text>
+    <text x="0" y="200" font-family="Arial, sans-serif" font-size="14" fill="#4B5563" text-anchor="middle">Gestion</text>
+    <text x="-170" y="90" font-family="Arial, sans-serif" font-size="14" fill="#4B5563" text-anchor="end">Marketing</text>
+    <text x="-170" y="-90" font-family="Arial, sans-serif" font-size="14" fill="#4B5563" text-anchor="end">Innovation</text>
+  </g>
+  
+  <!-- Légende -->
+  <g transform="translate(630, 100)">
+    <rect width="150" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1" />
+    
+    <circle cx="25" cy="25" r="6" fill="#6366F1" />
+    <text x="45" y="30" font-family="Arial, sans-serif" font-size="14" fill="#4B5563">Candidat A</text>
+    
+    <circle cx="25" cy="55" r="6" fill="#F59E0B" />
+    <text x="45" y="60" font-family="Arial, sans-serif" font-size="14" fill="#4B5563">Candidat B</text>
+  </g>
+</svg>

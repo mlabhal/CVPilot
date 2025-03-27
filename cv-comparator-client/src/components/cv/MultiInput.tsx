@@ -7,6 +7,7 @@ interface MultiInputProps {
   onChange: (value: string[]) => void;
   placeholder?: string;
   required?: boolean;
+  style?: React.CSSProperties;
 }
 
 const MultiInput: React.FC<MultiInputProps> = ({
@@ -15,7 +16,8 @@ const MultiInput: React.FC<MultiInputProps> = ({
   value = [], // Valeur par défaut
   onChange,
   placeholder,
-  required
+  required,
+  style
 }) => {
   const [inputValue, setInputValue] = useState('');
   const items = Array.isArray(value) ? value : []; // Assure que items est toujours un tableau
@@ -54,7 +56,7 @@ const MultiInput: React.FC<MultiInputProps> = ({
   };
 
   return (
-    <div>
+    <div style={style}>
       <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor={id}>
         {label} {required && '*'}
       </label>

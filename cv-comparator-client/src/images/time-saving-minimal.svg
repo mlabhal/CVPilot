@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Arrière-plan clair et uniforme -->
+  <rect width="800" height="500" fill="#fafaff" />
+  
+  <!-- Ligne de séparation centrale -->
+  <line x1="400" y1="100" x2="400" y2="400" stroke="#e2e8f0" stroke-width="3" />
+  
+  <!-- Côté gauche - Processus traditionnel -->
+  <g transform="translate(200, 250)">
+    <!-- Grande horloge -->
+    <circle cx="0" cy="0" r="100" fill="white" stroke="#e2e8f0" stroke-width="4" />
+    
+    <!-- Chiffres de l'horloge - les plus importants seulement -->
+    <text x="0" y="-75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">12</text>
+    <text x="75" y="0" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">3</text>
+    <text x="0" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">6</text>
+    <text x="-75" y="0" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">9</text>
+    
+    <!-- Aiguilles de l'horloge - plusieurs heures -->
+    <line x1="0" y1="0" x2="0" y2="-60" stroke="#64748b" stroke-width="4" stroke-linecap="round" /> <!-- Aiguille des heures -->
+    <line x1="0" y1="0" x2="40" y2="40" stroke="#64748b" stroke-width="3" stroke-linecap="round" /> <!-- Aiguille des minutes -->
+    
+    <!-- Point central -->
+    <circle cx="0" cy="0" r="6" fill="#64748b" />
+    
+    <!-- Étiquette -->
+    <text x="0" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#334155" text-anchor="middle">Processus manuel</text>
+    <text x="0" y="155" font-family="Arial, sans-serif" font-size="16" fill="#64748b" text-anchor="middle">8 heures</text>
+  </g>
+  
+  <!-- Côté droit - CVAnalyzer -->
+  <g transform="translate(600, 250)">
+    <!-- Grande horloge -->
+    <circle cx="0" cy="0" r="100" fill="white" stroke="#e2e8f0" stroke-width="4" />
+    
+    <!-- Chiffres de l'horloge - les plus importants seulement -->
+    <text x="0" y="-75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">12</text>
+    <text x="75" y="0" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">3</text>
+    <text x="0" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">6</text>
+    <text x="-75" y="0" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b" text-anchor="middle">9</text>
+    
+    <!-- Aiguilles de l'horloge - peu de temps -->
+    <line x1="0" y1="0" x2="0" y2="-30" stroke="#6366F1" stroke-width="4" stroke-linecap="round" /> <!-- Aiguille des heures -->
+    <line x1="0" y1="0" x2="50" y2="-15" stroke="#6366F1" stroke-width="3" stroke-linecap="round" /> <!-- Aiguille des minutes -->
+    
+    <!-- Point central -->
+    <circle cx="0" cy="0" r="6" fill="#6366F1" />
+    
+    <!-- Étiquette -->
+    <text x="0" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#334155" text-anchor="middle">Avec CVAnalyzer</text>
+    <text x="0" y="155" font-family="Arial, sans-serif" font-size="16" fill="#6366F1" text-anchor="middle">2 heures</text>
+  </g>
+  
+  <!-- Flèche de gain de temps -->
+  <g transform="translate(400, 400)">
+    <!-- Fond ovale -->
+    <rect x="-170" y="-30" width="340" height="60" rx="30" fill="#6366F1" />
+    
+    <!-- Texte -->
+    <text x="0" y="7" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">Réduction de 75% du temps</text>
+  </g>
+  
+  <!-- Titre -->
+  <g transform="translate(400, 60)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e293b" text-anchor="middle">Optimisez votre temps de recrutement</text>
+  </g>
+  
+  <!-- Icônes illustratives -->
+  <g transform="translate(400, 120)">
+    <!-- Documents à gauche -->
+    <g transform="translate(-150, 0)">
+      <rect x="-20" y="-15" width="40" height="30" fill="#e2e8f0" rx="3" />
+      <rect x="-15" y="-20" width="40" height="30" fill="#e2e8f0" rx="3" />
+      <rect x="-10" y="-25" width="40" height="30" fill="#e2e8f0" rx="3" />
+    </g>
+    
+    <!-- Flèche -->
+    <path d="M-100,0 L100,0" stroke="#6366F1" stroke-width="4" stroke-linecap="round" />
+    <path d="M80,-15 L100,0 L80,15" stroke="#6366F1" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- CV digital à droite -->
+    <g transform="translate(150, 0)">
+      <rect x="-25" y="-25" width="50" height="70" rx="5" fill="#6366F1" />
+      <rect x="-20" y="-20" width="40" height="60" rx="3" fill="white" />
+      <rect x="-15" y="-15" width="30" height="5" rx="2" fill="#6366F1" opacity="0.3" />
+      <rect x="-15" y="-5" width="30" height="5" rx="2" fill="#6366F1" opacity="0.3" />
+      <rect x="-15" y="5" width="20" height="5" rx="2" fill="#6366F1" opacity="0.3" />
+      <rect x="-15" y="15" width="30" height="5" rx="2" fill="#6366F1" opacity="0.3" />
+      <rect x="-15" y="25" width="15" height="5" rx="2" fill="#6366F1" opacity="0.3" />
+    </g>
+  </g>
+</svg>

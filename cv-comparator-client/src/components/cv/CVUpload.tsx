@@ -1,8 +1,11 @@
 import React, { useState, FormEvent, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Upload } from 'lucide-react';
 import MultiInput from './MultiInput';
 import { API_BASE_URL } from '../../services/api';
+import CVResultsPage from './CVResultsPage';
+import type { ApiResponse } from '../../types';
+
+const FunCVLoader = React.lazy(() => import('./FunCVLoader'));
 
 interface JobRequirements {
   skills: string[];
@@ -14,11 +17,11 @@ interface JobRequirements {
 }
 
 function CVUpload() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [results, setResults] = useState<ApiResponse | null>(null);
 
   const [requirements, setRequirements] = useState<JobRequirements>({
     skills: [],
@@ -29,10 +32,19 @@ function CVUpload() {
     description: '' // Initialisation du nouveau champ
   });
 
+  const MAX_CV_COUNT = 10; // Constante pour définir la limite
+
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files);
-      setSelectedFiles(filesArray);
+      
+      // Vérification de la limite
+      if (selectedFiles.length + filesArray.length > MAX_CV_COUNT) {
+        setError(`Vous ne pouvez pas télécharger plus de ${MAX_CV_COUNT} CV à la fois.`);
+        return;
+      }
+      
+      setSelectedFiles(prev => [...prev, ...filesArray]);
       setError(null);
     }
   };
@@ -48,7 +60,14 @@ function CVUpload() {
     
     if (event.dataTransfer.files) {
       const filesArray = Array.from(event.dataTransfer.files);
-      setSelectedFiles(filesArray);
+      
+      // Vérification de la limite
+      if (selectedFiles.length + filesArray.length > MAX_CV_COUNT) {
+        setError(`Vous ne pouvez pas télécharger plus de ${MAX_CV_COUNT} CV à la fois.`);
+        return;
+      }
+      
+      setSelectedFiles(prev => [...prev, ...filesArray]);
       setError(null);
     }
   };
@@ -61,6 +80,20 @@ function CVUpload() {
     setSelectedFiles(prevFiles => 
       prevFiles.filter((_, index) => index !== indexToRemove)
     );
+  };
+
+  const resetForm = () => {
+    setResults(null);
+    setSelectedFiles([]);
+    setRequirements({
+      skills: [],
+      tools: [],
+      experience_years: 0,
+      education: [],
+      languages: [],
+      description: ''
+    });
+    setError(null);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -106,13 +139,7 @@ function CVUpload() {
       }
 
       const data = await response.json();
-
-      navigate('/results', { 
-        state: { 
-          analysisResults: data,
-          requirements: requirements // On passe aussi les requirements si besoin
-        } 
-      });      
+      setResults(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
       console.error('Erreur lors de la comparaison:', err);
@@ -121,14 +148,27 @@ function CVUpload() {
     }
   };
 
+  // Si des résultats sont disponibles, afficher le composant de résultats
+  if (results) {
+    return (
+      <div>
+        <CVResultsPage 
+          apiResponse={results} 
+          isFromSearch={false}
+          resetForm={resetForm}
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-white ">
+    <div className="min-h-screen bg-transparent pt-0 ">
       <div className="container mx-auto">
           <div className="p-8">
-            <h1 className="text-3xl font-bold text-gray-600 mb-8">Analyseur de CV</h1>
+            <h1 className="text-3xl font-bold text-white mb-8">Comparateur des CVs</h1>
             
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 border-2 border-indigo-100">
+            <form onSubmit={handleSubmit} className="rounded-lg shadow-xl p-6 border-0 backdrop-blur-sm"
+              style={{ backgroundColor: 'rgba(249, 250, 251, 0.5)' }}>
               {/* Champs des exigences */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {/* Champ description - Nouveau */}
@@ -248,19 +288,45 @@ function CVUpload() {
                 </div>
 
                 {selectedFiles.length > 0 && (
-                  <div className="mt-4 space-y-2">
-                    {selectedFiles.map((file, index) => (
-                      <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                        <span className="text-sm text-gray-600">{file.name}</span>
-                        <button
-                          type="button"
-                          onClick={() => removeFile(index)}
-                          className="text-red-500 hover:text-red-700 text-sm"
-                        >
-                          Supprimer
-                        </button>
-                      </div>
-                    ))}
+                  <div className="mt-4">
+                    <div className="mb-2 flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-700">
+                        {selectedFiles.length} CV sélectionné{selectedFiles.length > 1 ? 's' : ''} sur {MAX_CV_COUNT} maximum
+                      </span>
+                      <span className={`text-xs font-medium ${selectedFiles.length === MAX_CV_COUNT ? 'text-amber-600' : 'text-blue-600'}`}>
+                        {selectedFiles.length === MAX_CV_COUNT ? 'Limite atteinte' : `${MAX_CV_COUNT - selectedFiles.length} emplacements restants`}
+                      </span>
+                    </div>
+                    
+                    {/* Barre de progression */}
+                    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-3">
+                      <div 
+                        className={`h-2.5 rounded-full ${
+                          selectedFiles.length === MAX_CV_COUNT 
+                            ? 'bg-amber-500' 
+                            : selectedFiles.length > MAX_CV_COUNT * 0.7 
+                              ? 'bg-amber-400' 
+                              : 'bg-blue-600'
+                        }`} 
+                        style={{ width: `${Math.min(100, (selectedFiles.length / MAX_CV_COUNT) * 100)}%` }}
+                      ></div>
+                    </div>
+                    
+                    {/* Liste des fichiers */}
+                    <div className="space-y-2">
+                      {selectedFiles.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                          <span className="text-sm text-gray-600">{file.name}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeFile(index)}
+                            className="text-red-500 hover:text-red-700 text-sm"
+                          >
+                            Supprimer
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -279,10 +345,19 @@ function CVUpload() {
                 {loading ? 'Analyse en cours...' : 'Comparer les CVs'}
               </button>
 
+              {/* Loader en overlay centré */}
               {loading && (
-                <div className="mt-4 text-center">
-                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500 mx-auto"></div>
-                  <p className="mt-2 text-gray-600">Analyse des CVs en cours...</p>
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                  <div className="bg-white rounded-xl p-4 shadow-2xl max-w-md w-full mx-4">
+                    <React.Suspense fallback={
+                      <div className="text-center p-8">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500 mx-auto"></div>
+                        <p className="mt-2 text-gray-600">Chargement...</p>
+                      </div>
+                    }>
+                      <FunCVLoader />
+                    </React.Suspense>
+                  </div>
                 </div>
               )}
             </form>
