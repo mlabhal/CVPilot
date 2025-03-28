@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMenuCollapsed, setIsMenuCollapsed }
 
   return (
     <div 
-      className={`fixed left-0 top-0 h-screen ${isMenuCollapsed ? 'w-26' : 'w-56'} shadow-xl border-0 backdrop-blur-lg z-50 transition-all duration-300 flex flex-col`}
+      className={`fixed left-0 top-0 h-screen ${isMenuCollapsed ? 'w-16' : 'w-46'} shadow-xl border-0 backdrop-blur-lg z-50 transition-all duration-300 flex flex-col`}
       style={{ 
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.1)'
@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMenuCollapsed, setIsMenuCollapsed }
             <img 
               src={logoImage} 
               alt="CV Pilot Logo" 
-              className="h-16 w-auto" 
+              className="h-10 w-auto" 
             />
           </div>
           {!isMenuCollapsed && <span className="text-lg font-bold text-white">CV Pilot</span>}
